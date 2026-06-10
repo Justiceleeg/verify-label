@@ -43,6 +43,8 @@ Build order for the label verification prototype. Requirements live in
 - Form + image upload (front/back) → results: side-by-side per field,
   color-coded verdicts, plain-language explanations.
 - Zero-training UX bar; one obvious primary action per screen.
+- Warning-text mismatch explanations should pinpoint the first divergence
+  from the §16.21 text (today they just say "doesn't match verbatim").
 
 ## 7. UI — batch
 

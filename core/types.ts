@@ -19,7 +19,9 @@ export type Confidence = "high" | "medium" | "low";
 
 /**
  * A single field as read off the label by the extractor.
- * `value: null` means the extractor could not read it (→ ❓ verdict).
+ * `value: null` means the field was not read; `confidence` then qualifies the
+ * null itself — `high` means "confidently absent from the label" (→ ❌ when
+ * the field is required), `medium`/`low` mean "could not read it" (→ ❓).
  */
 export interface ExtractedField {
   value: string | null;

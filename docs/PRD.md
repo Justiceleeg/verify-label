@@ -31,8 +31,8 @@ mother could figure it out"). UI must be clean, obvious, zero training.
 |---|-------|------|--------|
 | 1 | Brand name | Matches application. Fuzzy: case, punctuation, OCR noise ("STONE'S THROW" vs "Stone's Throw" → probable match, flagged, never silently passed) | 27 CFR §5.64 / §4.33 / §7.64 |
 | 2 | Class/type | Matches application (e.g., "Kentucky Straight Bourbon Whiskey") | §5 subpart I / §4.34 |
-| 3 | Alcohol content | Value matches; format valid ("Alc. 45% by Vol.", "45% alc/vol" — abbreviations allowed). Proof cross-checked against ABV (proof = 2×ABV). Wine may state a **range** (max 2 points wide >14% ABV, 3 points ≤14%) — accept if the application value falls inside it | §5.65 / §4.36 / §7.65 |
-| 4 | Net contents | Matches; metric units; mL/L normalization | §5.70 / §4.37 |
+| 3 | Alcohol content | Value matches; format valid ("Alc. 45% by Vol.", "45% alc/vol", "percent" spelled out — abbreviations allowed). Proof cross-checked against ABV (proof = 2×ABV) and must share the alc/vol statement's field of vision (§5.65(b)(1)(i)). Wine may state a **range** (max 2 points wide >14% ABV, 3 points ≤14%) — accept if the application value falls inside it | §5.65 / §4.36 / §7.65 |
+| 4 | Net contents | Matches; required units depend on beverage type — **metric** (mL/L) for spirits and wine, **US customary** (fl oz/pints/quarts/gallons) for malt beverages, with the other system allowed only as a supplement; units normalized for comparison | §5.70 / §4.37 / §7.70 |
 | 5 | Government warning | **Verbatim** match to §16.21 text. "GOVERNMENT WARNING" must be all caps and bold; remainder not bold. Title case, paraphrase, or omission → fail | 27 CFR §16.21–16.22 |
 | 6 | Same field of vision (spirits) | Brand name, class/type, and alcohol content must appear on the **same side** of the container. With front/back images, flag if these three fields were extracted from different images | §5.63 |
 | 7 | Bottler/importer name & address; country of origin (imports) | Stretch goal | §5.66/§5.68 et al. |
@@ -160,7 +160,7 @@ state).
 - [27 CFR Part 16](https://www.ecfr.gov/current/title-27/chapter-I/subchapter-A/part-16) — Health Warning Statement (verbatim text §16.21, formatting §16.22)
 - [27 CFR Part 5](https://www.ecfr.gov/current/title-27/chapter-I/subchapter-A/part-5) — distilled spirits labeling (brand §5.64, ABV §5.65, same field of vision §5.63, net contents §5.70)
 - [27 CFR Part 4](https://www.ecfr.gov/current/title-27/chapter-I/subchapter-A/part-4) — wine labeling (ABV rules/ranges §4.36)
-- [27 CFR Part 7](https://www.ecfr.gov/current/title-27/chapter-I/subchapter-A/part-7) — malt beverage labeling (ABV §7.65)
+- [27 CFR Part 7](https://www.ecfr.gov/current/title-27/chapter-I/subchapter-A/part-7) — malt beverage labeling (ABV §7.65, net contents in US measure §7.70)
 - [TTB: Certificate of Label Approval (COLA)](https://www.ttb.gov/regulated-commodities/labeling/colas) — what reviewers check, process context
 - [TTB Distilled Spirits Labeling Checklist (PDF)](https://www.ttb.gov/system/files/images/labeling-ds/ds-labeling-checklist.pdf) — closest analog to the agents' printed checklist
 

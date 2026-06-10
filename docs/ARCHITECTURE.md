@@ -155,7 +155,8 @@ the affected row only.
   reports what the label says, including caps/bold observations for the
   warning, plus per-field confidence; it renders no compliance judgment.
 - **Comparison (deterministic code):** case-folding, punctuation stripping,
-  ABV/proof arithmetic (proof = 2 × ABV), mL↔L normalization, verbatim
+  ABV/proof arithmetic (proof = 2 × ABV), net-contents unit normalization
+  (mL↔L, and fl oz/pints/quarts/gallons for malt per §7.70), verbatim
   §16.21 warning compare (whitespace-normalized exact match; caps checked in
   code; bold is LLM-reported best-effort with a stated confidence caveat),
   beverage-type rules (e.g., wine ≤14% ABV may omit alcohol content when
