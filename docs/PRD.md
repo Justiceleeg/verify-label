@@ -88,7 +88,7 @@ No bare overall pass/fail that hides field detail; overall status is derived
 
 ## Architecture decisions
 
-- **Extraction = vision LLM (Claude); comparison = deterministic code.** The
+- **Extraction = vision LLM; comparison = deterministic code.** The
   LLM only extracts structured fields from the image. Normalization and
   matching (case-folding, punctuation stripping, ABV/proof math, mL/L
   conversion, verbatim warning compare) are plain code: testable, explainable,
@@ -96,8 +96,12 @@ No bare overall pass/fail that hides field detail; overall status is derived
 - **Warning check:** exact string compare after whitespace normalization;
   caps checked in code; bold reported by the LLM best-effort with a
   confidence caveat (bold detection from photos is inherently fuzzy).
-- **Pluggable extractor interface.** Default: Claude vision API. The
-  interface is the seam for swapping in an Azure-hosted or local model.
+- **Pluggable extractor interface.** Default: OpenAI gpt-5.4-mini with
+  reasoning off — chosen on a measured cost/latency/accuracy benchmark over
+  the fixture batch (see ARCHITECTURE "Extractor benchmark"; it was the only
+  config under the ≤5s budget). A Claude implementation ships alongside
+  behind the same interface, which is also the seam for swapping in an
+  Azure-hosted or local model.
 - **Imperfect images** (angles, glare, lighting): handled implicitly by the
   vision LLM; ❓ verdict when genuinely unreadable, never a guess.
 
@@ -117,9 +121,11 @@ No bare overall pass/fail that hides field detail; overall status is derived
   domains (killed a prior vendor pilot). Decision: build the prototype on a
   cloud vision API — the deployed demo runs outside TTB's network — and
   document the production path at the end: single allowlisted egress endpoint
-  → model hosted in TTB's existing Azure tenant (Azure AI Foundry /
-  Azure Government, traffic never leaves their boundary) → local model if
-  air-gapped. The pluggable extractor is the mechanism. This is a mitigated
+  → model hosted in TTB's existing Azure tenant (Azure OpenAI /
+  Azure Government, traffic never leaves their boundary; the default
+  extractor's model family is natively hosted there, so the swap is config,
+  not rework) → local model if air-gapped. The pluggable extractor is the
+  mechanism. This is a mitigated
   trade-off, not an oversight.
 - **Prototype security posture:** no PII, no retention requirements, no auth
   (per IT stakeholder). Don't store uploads beyond the session.
@@ -151,7 +157,8 @@ No bare overall pass/fail that hides field detail; overall status is derived
 ## Stack (recommendation)
 
 Next.js (single deployable, API routes for the extraction/compare pipeline),
-Claude vision API behind the extractor interface, deployed on Vercel. Chosen
+vision LLM behind the extractor interface (default OpenAI gpt-5.4-mini;
+Claude alternative included), deployed on Vercel. Chosen
 for fastest path to a polished deployed prototype; no DB needed (session-only
 state).
 

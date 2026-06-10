@@ -21,7 +21,7 @@ the client, so there is no job queue, no websockets, and no object storage.
 ┌───────────────────────────────▼─────────────────────────────────────────┐
 │                    Next.js API route (stateless)                        │
 │   ┌─ core/ (pure TS, no framework imports, unit-tested) ─────────────┐  │
-│   │  extractor/  Extractor interface → claude.ts (vision, tool-use)   │  │
+│   │  extractor/  Extractor interface → openai.ts (default) | claude   │  │
 │   │  rules/      beverage-type config, §16.21 warning text constant   │  │
 │   │  compare/    normalize → match → per-field Verdict[]              │  │
 │   └────────────────────────────────────────────────────────────────────┘ │
@@ -29,7 +29,8 @@ the client, so there is no job queue, no websockets, and no object storage.
 └───────────────────────────────┬─────────────────────────────────────────┘
                                 │ base64 image + extraction schema
                                 ▼
-                      Anthropic API (Claude vision)
+                Vision LLM API — default: OpenAI gpt-5.4-mini;
+                 Claude implementation behind the same seam
                       [the single egress endpoint]
 ```
 
@@ -38,7 +39,8 @@ the client, so there is no job queue, no websockets, and no object storage.
 ```
 core/
   types.ts        ApplicationData, LabelFields, Verdict — shared end-to-end
-  extractor/      Extractor interface + claude.ts implementation
+  extractor/      Extractor interface; openai.ts (default), claude.ts,
+                  consensus.ts (N-vote wrapper) — see "Extractor benchmark"
   compare/        normalization + per-field matchers + verdict derivation
   rules/          beverage-type rules, government warning constant
 app/              Next.js App Router pages + api/verify route
@@ -150,10 +152,12 @@ the affected row only.
 
 ## Extraction vs. comparison (the core split)
 
-- **Extraction (LLM):** Claude vision with tool-use structured output —
-  response is schema-validated `LabelFields`, never prose-parsed. The model
-  reports what the label says, including caps/bold observations for the
-  warning, plus per-field confidence; it renders no compliance judgment.
+- **Extraction (LLM):** one vision call with strict structured output
+  (JSON-schema response format on OpenAI; forced tool use on Claude — same
+  prompt and schema either way) — response is schema-validated
+  `LabelFields`, never prose-parsed. The model reports what the label says,
+  including caps/bold observations for the warning, plus per-field
+  confidence; it renders no compliance judgment.
 - **Comparison (deterministic code):** case-folding, punctuation stripping,
   ABV/proof arithmetic (proof = 2 × ABV), net-contents unit normalization
   (mL↔L, and fl oz/pints/quarts/gallons for malt per §7.70), verbatim
@@ -172,15 +176,43 @@ Implementations are interchangeable behind config:
 
 | Path | Hosting | Accuracy | Cost (TTB volume: ~150k labels/yr) | When |
 |---|---|---|---|---|
-| Claude API (ships in prototype) | Anthropic, single egress endpoint | Best | ~$3–6k/yr in API calls | Prototype; production with one allowlisted domain |
-| Frontier model in TTB's Azure tenant (Azure AI Foundry / Azure Government) | TTB cloud boundary | Best | API pricing, no egress | **Recommended production path** — firewall problem dissolves |
+| OpenAI API, gpt-5.4-mini, reasoning off (**ships as default**) | OpenAI, single egress endpoint | Strong (see benchmark) | ~$1.5k/yr in API calls | Prototype; only measured config under the ≤5s budget |
+| Claude API (ships alongside, `EXTRACTOR_PROVIDER=claude`) | Anthropic, single egress endpoint | Best at Opus tier, over latency budget | ~$1–7.5k/yr by model tier | Accuracy ceiling / escalation target |
+| Frontier model in TTB's Azure tenant (Azure OpenAI / Azure Government) | TTB cloud boundary | Best | API pricing, no egress | **Recommended production path** — firewall problem dissolves; the default extractor's model family is natively hosted there, so the swap is config, not rework |
 | Local VLM (Ollama/vLLM + Qwen2.5-VL class) | GPU VM or on-prem | Good, below frontier | ~$9–25k/yr GPU + ops burden | Air-gapped mandate only |
 | Classical OCR (PaddleOCR via small FastAPI sidecar) | CPU, anywhere | Weak on stylized/curved labels | Cheapest compute | Benchmark/fallback data point |
 
 Nobody picks local inference at this volume to save money; it exists for the
-no-egress-permitted scenario. The deployed prototype uses the Claude API —
+no-egress-permitted scenario. The deployed prototype calls the OpenAI API —
 the demo runs outside TTB's network, so the firewall constraint does not
 apply to it (see PRD "Constraints & trade-offs").
+
+### Extractor benchmark (54-case fixture batch, June 2026)
+
+Measured with `pnpm extract:eval` (live API, images downscaled to ≤1100px,
+concurrency 8). Verdict score = cases whose per-field verdicts and overall
+status all match `expected.json`.
+
+| Config | Verdicts | Avg latency | ~Cost/label |
+|---|---|---|---|
+| **gpt-5.4-mini, reasoning off (default)** | 48/54 | **3.9s** | ~$0.01 |
+| claude-haiku-4-5 | 48–52/54 (run-to-run variance) | 5–6s | ~$0.006 |
+| claude-haiku-4-5 ×3 consensus vote | 50/54 (stable) | 7.3s | ~$0.018 |
+| claude-sonnet-4-6, effort low | clean on slice, never faster | 8–13s | ~$0.02 |
+| claude-opus-4-8, full-res | 54/54 on all cases tested | 6.5–11s | ~$0.05 |
+
+Why the default isn't the top scorer: gpt-5.4-mini was the only config under
+the ≤5s budget, and its misses are uniform and benign — every one was an
+obscured field classified "confidently absent" (❌) instead of "unreadable"
+(❓), and both verdicts route the row to a human. It never hallucinated a
+reading (single-shot Haiku occasionally invented a brand name from blurred
+text — disqualifying), caught every seeded content error including
+single-word warning edits, and was the only small model to catch the
+non-bold warning heading. Consensus voting (`consensus.ts`) cures
+small-model run-to-run flakiness but not latency — parallel votes cost
+max-of-N wall clock. Possible v2: escalate to a frontier model when any
+field returns null (the trigger is detectable in plain code), keeping the
+fast path at 3.9s.
 
 ## Latency budget (≤5s per label)
 
@@ -188,8 +220,11 @@ apply to it (see PRD "Constraints & trade-offs").
 |---|---|
 | Client downscale | ~0.2s |
 | Upload | ~0.3s |
-| Claude vision call (1–2 images, single pass) | ~2–4s |
+| Vision call (gpt-5.4-mini, reasoning off, 1–2 images, single pass) | ~3–4s measured |
 | Comparison + response | ~0ms |
+
+(The first request after a schema change pays a one-time structured-output
+compilation penalty, cached upstream for ~24h — invisible in steady state.)
 
 No multi-pass extraction; front+back images go in one request.
 
@@ -201,7 +236,7 @@ guardrails, all in the `/api/verify` route:
 - Per-IP rate limit (in-memory token bucket is fine per-instance for a demo).
 - Server-side payload validation: max images per request, max body size,
   image MIME allowlist.
-- Spending cap on the API key in the Anthropic console (backstop).
+- Spending cap on the API key in the provider console (backstop).
 - Optional: a demo passcode supplied with the submission.
 
 ## Test fixtures
@@ -223,8 +258,9 @@ these fixtures (bold detection especially — best-effort by design).
 - **v1: Vercel.** Zero-ops, free tier, fits the stateless design.
 - The same repo deploys as a Docker container (Fly/Railway) unchanged — the
   path if an in-process or sidecar extractor experiment ever needs it.
-- Config: `ANTHROPIC_API_KEY` (server-side env var only; never exposed to the
-  client). No database, no buckets, no other services.
+- Config: `OPENAI_API_KEY` for the default extractor (`ANTHROPIC_API_KEY`
+  only when `EXTRACTOR_PROVIDER=claude`); server-side env vars only, never
+  exposed to the client. No database, no buckets, no other services.
 
 ## Testing
 

@@ -10,10 +10,13 @@
     "lint": "eslint",
     "test": "vitest run",
     "test:watch": "vitest",
-    "fixtures:generate": "tsx fixtures/generate/index.ts"
+    "fixtures:generate": "tsx fixtures/generate/index.ts",
+    "extract:eval": "tsx scripts/extract-eval.ts"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.104.1",
     "next": "16.2.9",
+    "openai": "^6.42.0",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },

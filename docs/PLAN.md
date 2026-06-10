@@ -27,9 +27,12 @@ Build order for the label verification prototype. Requirements live in
 
 ## 4. Extraction
 
-- `Extractor` interface + Claude vision implementation (tool-use structured
-  output, nullable fields, per-field confidence + source image).
-- Iterate the extraction prompt against fixtures (expected main loop;
+- `Extractor` interface + vision implementations (strict structured output,
+  nullable fields, per-field confidence + source image). Default: OpenAI
+  gpt-5.4-mini with reasoning off, chosen on the measured fixture benchmark
+  (architecture doc, "Extractor benchmark") — the only config under the ≤5s
+  budget. Claude implementation and an N-vote consensus wrapper alongside.
+- Iterate the extraction prompt against fixtures (`pnpm extract:eval`;
   bold detection is best-effort).
 - Recorded-response tests; no live API in CI.
 
@@ -54,7 +57,7 @@ Build order for the label verification prototype. Requirements live in
 
 ## 8. Ship
 
-- Deploy to Vercel (`ANTHROPIC_API_KEY`, spending cap, abuse guardrails).
+- Deploy to Vercel (`OPENAI_API_KEY`, spending cap, abuse guardrails).
 - README: setup/run, approach, assumptions, trade-offs, production paths.
 - Verify success criteria: single label ≤5s end-to-end; seeded-error batch
   all caught; first-time-user walkthrough.
