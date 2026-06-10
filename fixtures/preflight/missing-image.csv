@@ -1,0 +1,4 @@
+application_id,beverage_type,brand_name,class_type,abv,net_contents,image_files
+APP-001,spirits,Old Tom Distillery,Kentucky Straight Bourbon Whiskey,45,750 mL,app-001-front.png;app-001-back.png
+APP-901,spirits,Phantom Ridge,Vodka,40,750 mL,phantom-ridge-front.png
+APP-902,spirits,Empty Crate,Gin,42,750 mL,

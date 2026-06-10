@@ -1,0 +1,55 @@
+application_id,beverage_type,brand_name,class_type,abv,net_contents,image_files
+APP-001,spirits,Old Tom Distillery,Kentucky Straight Bourbon Whiskey,45,750 mL,app-001-front.png;app-001-back.png
+APP-002,spirits,Blue Heron,Straight Rye Whiskey,45,750 mL,app-002-front.png;app-002-back.png
+APP-003,spirits,Cedar Ridge,Straight Bourbon Whiskey,43,750 mL,app-003-front.png;app-003-back.png
+APP-004,spirits,Juniper & Pine,London Dry Gin,47,1 L,app-004-front.png;app-004-back.png
+APP-005,spirits,Silver Creek,Vodka,40,750 mL,app-005-front.png;app-005-back.png
+APP-006,spirits,Whitetail,Tennessee Whiskey,40,750 mL,app-006-front.png;app-006-back.png
+APP-007,spirits,Stone's Throw,Straight Bourbon Whiskey,46,750 mL,app-007-front.png;app-007-back.png
+APP-008,spirits,Copper Kettle,Single Malt Whiskey,45,750 mL,app-008-front.png;app-008-back.png
+APP-009,wine,Willow Bend,Chardonnay,13,750 mL,app-009-front.png;app-009-back.png
+APP-010,wine,Veranda,Red Wine,15.5,750 mL,app-010-front.png;app-010-back.png
+APP-011,wine,Old Vine Cellars,Red Table Wine,12,750 mL,app-011-front.png;app-011-back.png
+APP-012,malt,Crooked Anchor,India Pale Ale,6.5,12 fl oz,app-012-front.png
+APP-013,malt,Iron Bell,Lager,5,12 fl oz,app-013-front.png;app-013-back.png
+APP-014,malt,Tidal Wave,Flavored Malt Beverage,5,16 fl oz,app-014-front.png;app-014-back.png
+APP-015,spirits,North Fork,Straight Bourbon Whiskey,50,750 mL,app-015-front.png;app-015-back.png
+APP-016,spirits,Black Maple,Straight Bourbon Whiskey,50,750 mL,app-016-front.png;app-016-back.png
+APP-017,spirits,Foggy Bottom,Blended Whiskey,40,750 mL,app-017-front.png;app-017-back.png
+APP-018,spirits,Boone County,Kentucky Straight Bourbon Whiskey,45,750 mL,app-018-front.png;app-018-back.png
+APP-019,spirits,Harbor Light,White Rum,40,750 mL,app-005-front.png;app-005-back.png
+APP-020,wine,Meadowlark,Rosé Wine,10.5,750 mL,app-020-front.png;app-020-back.png
+APP-021,spirits,Quarry Stone,Straight Corn Whiskey,40,750 mL,app-021-front.png;app-021-back.png
+APP-022,spirits,Harrow & Sage,Small Batch Gin,44,750 mL,app-022-front.png;app-022-back.png
+APP-023,wine,Sable Estate,Pinot Noir,13.5,750 mL,app-023-front.png;app-023-back.png
+APP-024,spirits,Drift Line,Spiced Rum,42,750 mL,app-024-front.png;app-024-back.png
+APP-025,wine,Quiet Hollow,Cabernet Sauvignon,14,750 mL,app-025-front.png;app-025-back.png
+APP-026,spirits,Ironwood,Straight Rye Whiskey,46,750 mL,app-026-front.png;app-026-back.png
+APP-027,spirits,Stonebridge,Single Barrel Bourbon Whiskey,47,750 mL,app-027-front.png;app-027-back.png
+APP-028,wine,Bramble Gate,Sauvignon Blanc,12.5,750 mL,app-028-front.png;app-028-back.png
+APP-029,malt,Gristmill,Amber Ale,5.6,12 fl oz,app-029-front.png;app-029-back.png
+APP-030,spirits,Castle Peak,American Single Malt Whiskey,43,750 mL,app-030-front.png;app-030-back.png
+APP-031,spirits,Hollow Creek,Kentucky Straight Bourbon Whiskey,45,750 mL,app-031-front.png;app-031-back.png
+APP-032,spirits,Pale Harbor,Dry Gin,44,750 mL,app-032-front.png;app-032-back.png
+APP-033,spirits,Kestrel,Straight Rye Whiskey,41,750 mL,app-033-front.png;app-033-back.png
+APP-034,wine,Norwood Cellars,Merlot,13.5,750 mL,app-034-front.png;app-034-back.png
+APP-035,spirits,Saddle Ridge,Vodka,40,750 mL,app-035-front.png;app-035-back.png
+APP-036,spirits,Twin Pines,Straight Bourbon Whiskey,46,750 mL,app-036-front.png;app-036-back.png
+APP-037,spirits,Red Lantern,White Rum,40,750 mL,app-037-front.png;app-037-back.png
+APP-038,spirits,Coyote Flats,Tennessee Whiskey,41,750 mL,app-038-front.png;app-038-back.png
+APP-039,spirits,Marble Arch,London Dry Gin,47,750 mL,app-039-front.png;app-039-back.png
+APP-040,wine,Belle Saison,Brut Sparkling Wine,12,750 mL,app-040-front.png;app-040-back.png
+APP-041,spirits,Copperline,Apple Brandy,43,750 mL,app-041-front.png
+APP-042,malt,Half Hitch,Hazy India Pale Ale,6.8,16 fl oz,app-042-front.png
+APP-043,wine,Foxglove,White Zinfandel,10.5,750 mL,app-043-front.png;app-043-back.png
+APP-044,spirits,Quarter Moon,Blanco Tequila,40,1 L,app-044-front.png;app-044-back.png
+APP-045,wine,Lark & Vine,Chardonnay,13,750 mL,app-045-front.png;app-045-back.png
+APP-046,spirits,Gull Point,Single Malt Whiskey,46,750 mL,app-046-front.png;app-046-back.png
+APP-047,malt,North Pier,Porter,5.8,12 fl oz,app-047-front.png;app-047-back.png
+APP-048,wine,Millbrook,Red Table Wine,11.5,750 mL,app-048-front.png
+APP-049,spirits,Verity,Straight Wheat Whiskey,45,750 mL,app-049-front.png;app-049-back.png
+APP-050,spirits,Birchwood,Straight Bourbon Whiskey,45,750 mL,app-050-front.png;app-050-back.png
+APP-051,spirits,Tidewater,Spiced Rum,45.5,750 mL,app-051-front.png;app-051-back.png
+APP-052,wine,Harvest Gate,Merlot,13,750 mL,app-052-front.png;app-052-back.png
+APP-053,malt,Stillwater Flats,Lager,4.8,12 fl oz,app-053-front.png;app-053-back.png
+APP-054,spirits,Pocket Watch,Peach Brandy,35,375 mL,app-054-front.png;app-054-back.png

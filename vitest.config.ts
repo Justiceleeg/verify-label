@@ -8,7 +8,7 @@ export default defineConfig({
     },
   },
   test: {
-    include: ["core/**/*.test.ts"],
+    include: ["core/**/*.test.ts", "fixtures/**/*.test.ts"],
     passWithNoTests: true,
   },
 });
