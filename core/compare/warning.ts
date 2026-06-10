@@ -7,6 +7,55 @@ import type { ExtractedWarning, Verdict } from "../types";
 import { normalizeWhitespace } from "./normalize";
 import { absence, verdict } from "./verdicts";
 
+const REGULATION_REMINDER =
+  "The required wording is fixed by regulation — no paraphrasing.";
+
+/** First ~8 words of a token span, with an ellipsis if it runs longer. */
+function snippet(tokens: string[]): string {
+  const head = tokens.slice(0, 8).join(" ");
+  return tokens.length > 8 ? `${head}…` : head;
+}
+
+/**
+ * Explain where a non-verbatim warning first diverges from the §16.21 text.
+ * Expects whitespace-normalized input that is known to differ from the
+ * required text by wording (not just capitalization).
+ */
+export function explainWarningDivergence(labelText: string): string {
+  const labelTokens = labelText.split(" ");
+  const requiredTokens = GOVERNMENT_WARNING.split(" ");
+  const shared = Math.min(labelTokens.length, requiredTokens.length);
+
+  for (let i = 0; i < shared; i++) {
+    if (labelTokens[i].toLowerCase() !== requiredTokens[i].toLowerCase()) {
+      return (
+        `The warning text doesn't match the required statement. The first difference is at word ${i + 1}: ` +
+        `the label says "${labelTokens[i]}" where the required text says "${requiredTokens[i]}". ` +
+        REGULATION_REMINDER
+      );
+    }
+  }
+
+  if (labelTokens.length < requiredTokens.length) {
+    return (
+      `The label's warning stops early. It is missing the required text starting at word ${shared + 1}: ` +
+      `"${snippet(requiredTokens.slice(shared))}" ` +
+      REGULATION_REMINDER
+    );
+  }
+  if (labelTokens.length > requiredTokens.length) {
+    return (
+      `The label adds extra text after the required statement, starting with: ` +
+      `"${snippet(labelTokens.slice(shared))}" ` +
+      REGULATION_REMINDER
+    );
+  }
+
+  // Unreachable when the caller has already ruled out a case-insensitive
+  // match, but keep a sensible fallback.
+  return `The warning text doesn't match the required statement verbatim. ${REGULATION_REMINDER}`;
+}
+
 export function compareWarning(extracted: ExtractedWarning): Verdict {
   if (extracted.value === null) {
     if (absence(extracted) === "absent") {
@@ -55,7 +104,7 @@ export function compareWarning(extracted: ExtractedWarning): Verdict {
       "mismatch",
       labelText,
       GOVERNMENT_WARNING,
-      "The warning text doesn't match the required statement verbatim. The required wording is fixed by regulation — no paraphrasing.",
+      explainWarningDivergence(labelText),
     );
   }
 
