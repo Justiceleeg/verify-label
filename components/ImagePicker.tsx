@@ -60,16 +60,16 @@ export function ImagePicker({
 
   return (
     <div>
-      <span className="mb-1 block text-sm font-medium">{label}</span>
+      <span className="mb-1.5 block text-sm font-medium">{label}</span>
       {file ? (
-        <div className="flex items-center gap-4 rounded-lg border border-gray-300 p-3 dark:border-gray-700">
+        <div className="flex items-center gap-4 rounded-md border bg-card p-3">
           {previewUrl && (
             // Session-only blob preview; next/image adds nothing for object URLs.
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={previewUrl}
               alt={`${label} preview`}
-              className="h-24 w-24 rounded object-contain"
+              className="h-24 w-24 rounded-sm object-contain"
             />
           )}
           <div className="min-w-0 flex-1">
@@ -78,7 +78,7 @@ export function ImagePicker({
               type="button"
               onClick={remove}
               disabled={disabled}
-              className="mt-1 text-sm font-medium text-blue-700 underline disabled:opacity-50 dark:text-blue-400"
+              className="mt-1 text-sm font-medium text-primary underline underline-offset-4 hover:text-primary/80 disabled:opacity-50"
             >
               Remove
             </button>
@@ -96,10 +96,10 @@ export function ImagePicker({
             setDragging(false);
             if (!disabled) pick(e.dataTransfer.files[0]);
           }}
-          className={`flex min-h-24 cursor-pointer flex-col items-center justify-center gap-1 rounded-lg border-2 border-dashed p-4 text-center text-sm ${
+          className={`flex min-h-24 cursor-pointer flex-col items-center justify-center gap-1 rounded-md border-2 border-dashed p-4 text-center text-sm transition-colors ${
             dragging
-              ? "border-blue-500 bg-blue-50 dark:bg-blue-950"
-              : "border-gray-300 hover:border-gray-400 dark:border-gray-700 dark:hover:border-gray-500"
+              ? "border-ring bg-accent"
+              : "border-input hover:border-ring/60 hover:bg-muted/50"
           } ${disabled ? "cursor-not-allowed opacity-50" : ""}`}
         >
           <input
@@ -112,19 +112,15 @@ export function ImagePicker({
             aria-invalid={message ? true : undefined}
             aria-describedby={message ? errorId : undefined}
           />
-          <span className="font-medium text-blue-700 dark:text-blue-400">
-            Choose a photo
-          </span>
-          <span className="text-gray-500 dark:text-gray-400">
-            or drag one here
-          </span>
+          <span className="font-medium text-primary">Choose a photo</span>
+          <span className="text-muted-foreground">or drag one here</span>
         </label>
       )}
       {helper && !message && (
-        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{helper}</p>
+        <p className="mt-1.5 text-sm text-muted-foreground">{helper}</p>
       )}
       {message && (
-        <p id={errorId} className="mt-1 text-sm text-red-700 dark:text-red-400">
+        <p id={errorId} className="mt-1.5 text-sm text-destructive">
           {message}
         </p>
       )}

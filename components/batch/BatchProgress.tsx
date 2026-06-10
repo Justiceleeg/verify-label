@@ -4,6 +4,8 @@
 // (PRD "Batch processing" step 4). Stays visible above the results table
 // while rows stream in, and doubles as the summary line when finished.
 
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
 import type { RowState } from "@/lib/batch/run";
 import { OUTCOME_BADGE, type RowOutcome } from "./OverallBadge";
 
@@ -50,7 +52,7 @@ export function BatchProgress({
   const percent = total === 0 ? 0 : Math.round((settled / total) * 100);
 
   return (
-    <div className="flex flex-col gap-3 rounded-lg border border-gray-200 p-4 dark:border-gray-800">
+    <div className="flex flex-col gap-3 rounded-md border bg-card p-4 shadow-xs">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <p className="font-semibold" role="status">
           {running
@@ -58,29 +60,13 @@ export function BatchProgress({
             : `Checked ${settled} of ${total} labels`}
         </p>
         {running && (
-          <button
-            type="button"
-            onClick={onCancel}
-            className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-900"
-          >
+          <Button type="button" variant="outline" size="sm" onClick={onCancel}>
             Stop checking
-          </button>
+          </Button>
         )}
       </div>
 
-      <div
-        role="progressbar"
-        aria-valuenow={settled}
-        aria-valuemin={0}
-        aria-valuemax={total}
-        aria-label="Labels checked"
-        className="h-2 overflow-hidden rounded-full bg-gray-200 dark:bg-gray-800"
-      >
-        <div
-          className="h-full rounded-full bg-blue-600 transition-[width] duration-300"
-          style={{ width: `${percent}%` }}
-        />
-      </div>
+      <Progress value={percent} aria-label="Labels checked" className="h-2" />
 
       <ul className="flex flex-wrap gap-x-4 gap-y-1 text-sm">
         {TALLY_ORDER.map((outcome) => {

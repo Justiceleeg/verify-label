@@ -6,6 +6,7 @@
 // batch (accepted trade-off, ARCHITECTURE "Client-orchestrated batch").
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { Button } from "@/components/ui/button";
 import { exportResultsCsv } from "@/lib/batch/exportCsv";
 import { collectImageSources, type ImageSource } from "@/lib/batch/imageSource";
 import { preflight, type BatchRowInput } from "@/lib/batch/preflight";
@@ -144,9 +145,6 @@ export function BatchChecker() {
 
     const failed = rows.filter((row) => row.state.status === "error");
     const remaining = rows.filter((row) => row.state.status === "pending");
-    const secondaryButton =
-      "rounded-lg border border-gray-300 px-5 py-2.5 text-sm font-medium " +
-      "hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-900";
 
     return (
       <div className="flex flex-col gap-5">
@@ -159,39 +157,27 @@ export function BatchChecker() {
         {!running && (
           <div className="flex flex-wrap items-center gap-3">
             {remaining.length > 0 && (
-              <button
-                type="button"
-                onClick={() => rerun(remaining)}
-                className="rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-800"
-              >
+              <Button type="button" onClick={() => rerun(remaining)}>
                 Check remaining {remaining.length} row{remaining.length === 1 ? "" : "s"}
-              </button>
+              </Button>
             )}
             {failed.length > 0 && (
-              <button
-                type="button"
-                onClick={() => rerun(failed)}
-                className={secondaryButton}
-              >
+              <Button type="button" variant="outline" onClick={() => rerun(failed)}>
                 Retry {failed.length} failed row{failed.length === 1 ? "" : "s"}
-              </button>
+              </Button>
             )}
-            <button
+            <Button
               type="button"
+              variant="outline"
               onClick={() =>
                 downloadCsv(exportResultsCsv(rows), "label-check-results.csv")
               }
-              className={secondaryButton}
             >
               Export results CSV
-            </button>
-            <button
-              type="button"
-              onClick={() => setStage("setup")}
-              className={secondaryButton}
-            >
+            </Button>
+            <Button type="button" variant="outline" onClick={() => setStage("setup")}>
               Start a new batch
-            </button>
+            </Button>
           </div>
         )}
 
@@ -221,7 +207,7 @@ export function BatchChecker() {
       {preflightResult ? (
         <PreflightReport result={preflightResult} onStart={start} />
       ) : (
-        <p className="text-sm text-gray-500 dark:text-gray-400">
+        <p className="text-sm text-muted-foreground">
           Add the CSV and the label images — we&apos;ll check everything lines
           up before any label is processed.
         </p>

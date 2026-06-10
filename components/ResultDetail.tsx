@@ -13,18 +13,16 @@ import { StatusBadge } from "./StatusBadge";
 
 const OVERALL = {
   pass: {
-    classes:
-      "bg-green-100 text-green-900 dark:bg-green-950 dark:text-green-200",
+    classes: "border-success/30 bg-success/10 text-success",
     title: () => "Everything matches",
   },
   needs_review: {
-    classes:
-      "bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-200",
+    classes: "border-warning/40 bg-warning/10 text-warning",
     title: (n: number) =>
       `Needs your review — ${n} field${n === 1 ? "" : "s"} flagged`,
   },
   fail: {
-    classes: "bg-red-100 text-red-900 dark:bg-red-950 dark:text-red-200",
+    classes: "border-destructive/30 bg-destructive/10 text-destructive",
     title: (n: number) =>
       `Problems found — ${n} field${n === 1 ? "" : "s"} need${n === 1 ? "s" : ""} attention`,
   },
@@ -50,16 +48,16 @@ function ValueCell({
 }) {
   return (
     <div className="min-w-0">
-      <p className="text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">
+      <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
         {heading}
       </p>
       {value === null ? (
-        <p className="italic text-gray-500 dark:text-gray-400">
+        <p className="italic text-muted-foreground">
           {status === "unreadable" ? "Couldn't read" : "Not found on the label"}
         </p>
       ) : collapsible ? (
         <details>
-          <summary className="cursor-pointer text-sm font-medium text-blue-700 dark:text-blue-400">
+          <summary className="cursor-pointer text-sm font-medium text-primary">
             Show full text
           </summary>
           <p className="mt-1 whitespace-pre-wrap text-sm">{value}</p>
@@ -68,7 +66,7 @@ function ValueCell({
         <p className="break-words">{value}</p>
       )}
       {sourceNote && (
-        <p className="mt-0.5 text-xs text-gray-500 dark:text-gray-400">{sourceNote}</p>
+        <p className="mt-0.5 text-xs text-muted-foreground">{sourceNote}</p>
       )}
     </div>
   );
@@ -101,7 +99,7 @@ export function ResultDetail({ result, files }: ResultDetailProps) {
         ref={bannerRef}
         tabIndex={-1}
         role="status"
-        className={`rounded-lg p-4 text-lg font-semibold outline-none ${overall.classes}`}
+        className={`rounded-md border p-4 font-heading text-lg font-bold outline-none ${overall.classes}`}
       >
         {overall.title(flagged)}
       </div>
@@ -110,8 +108,8 @@ export function ResultDetail({ result, files }: ResultDetailProps) {
         {frontUrl && (
           <figure>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={frontUrl} alt="Front label" className="h-32 rounded object-contain" />
-            <figcaption className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+            <img src={frontUrl} alt="Front label" className="h-32 rounded-sm object-contain" />
+            <figcaption className="mt-1 text-xs text-muted-foreground">
               Front label
             </figcaption>
           </figure>
@@ -119,8 +117,8 @@ export function ResultDetail({ result, files }: ResultDetailProps) {
         {backUrl && (
           <figure>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={backUrl} alt="Back label" className="h-32 rounded object-contain" />
-            <figcaption className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+            <img src={backUrl} alt="Back label" className="h-32 rounded-sm object-contain" />
+            <figcaption className="mt-1 text-xs text-muted-foreground">
               Back label
             </figcaption>
           </figure>
@@ -136,7 +134,7 @@ export function ResultDetail({ result, files }: ResultDetailProps) {
           return (
             <li
               key={verdict.field}
-              className="rounded-lg border border-gray-200 p-4 dark:border-gray-800"
+              className="rounded-md border bg-card p-4 shadow-xs"
             >
               <div className="mb-2 flex flex-wrap items-center gap-2">
                 <StatusBadge status={verdict.status} />
@@ -159,7 +157,7 @@ export function ResultDetail({ result, files }: ResultDetailProps) {
                   />
                 </div>
               )}
-              <p className="mt-3 text-sm text-gray-700 dark:text-gray-300">
+              <p className="mt-3 text-sm text-foreground/80">
                 {verdict.explanation}
               </p>
             </li>

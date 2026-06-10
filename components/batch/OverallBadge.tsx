@@ -2,6 +2,7 @@
 // per-field StatusBadge. "error" is a row that couldn't be checked at all
 // (bad image, repeated API failure) — distinct from a label that failed.
 
+import { Badge } from "@/components/ui/badge";
 import type { OverallStatus } from "@/core/types";
 
 export type RowOutcome = OverallStatus | "error";
@@ -13,33 +14,31 @@ export const OUTCOME_BADGE: Record<
   pass: {
     emoji: "✅",
     text: "Pass",
-    classes: "bg-green-100 text-green-900 dark:bg-green-950 dark:text-green-200",
+    classes: "border-success/30 bg-success/10 text-success",
   },
   needs_review: {
     emoji: "⚠️",
     text: "Needs review",
-    classes: "bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-200",
+    classes: "border-warning/40 bg-warning/10 text-warning",
   },
   fail: {
     emoji: "❌",
     text: "Problems found",
-    classes: "bg-red-100 text-red-900 dark:bg-red-950 dark:text-red-200",
+    classes: "border-destructive/30 bg-destructive/10 text-destructive",
   },
   error: {
     emoji: "❗",
     text: "Couldn't check",
-    classes: "bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-200",
+    classes: "border-border bg-muted text-muted-foreground",
   },
 };
 
 export function OverallBadge({ outcome }: { outcome: RowOutcome }) {
   const { emoji, text, classes } = OUTCOME_BADGE[outcome];
   return (
-    <span
-      className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1 text-sm font-medium ${classes}`}
-    >
+    <Badge variant="outline" className={`h-auto gap-1.5 px-2.5 py-1 text-sm font-medium ${classes}`}>
       <span aria-hidden="true">{emoji}</span>
       {text}
-    </span>
+    </Badge>
   );
 }

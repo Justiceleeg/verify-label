@@ -5,6 +5,9 @@
 // inflate only when the agent opens the row.
 
 import { useEffect, useState } from "react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
 import type { ImageSource } from "@/lib/batch/imageSource";
 import type { BatchRow } from "@/lib/batch/run";
 import { ResultDetail } from "../ResultDetail";
@@ -41,14 +44,14 @@ export function RowDetailView({ row, images, onBack, onRetry }: RowDetailViewPro
         <button
           type="button"
           onClick={onBack}
-          className="text-sm font-medium text-blue-700 underline dark:text-blue-400"
+          className="text-sm font-medium text-primary underline underline-offset-4 hover:text-primary/80"
         >
           ← Back to all results
         </button>
-        <h2 className="mt-3 text-2xl font-bold">
+        <h2 className="mt-3 text-2xl font-bold tracking-tight">
           {row.application.application_id} — {row.application.brand_name}
         </h2>
-        <p className="text-sm text-gray-500 dark:text-gray-400">
+        <p className="mt-1 text-sm text-muted-foreground">
           CSV line {row.line} · {row.application.class_type}
         </p>
       </div>
@@ -56,12 +59,9 @@ export function RowDetailView({ row, images, onBack, onRetry }: RowDetailViewPro
       {(row.state.status === "pending" || row.state.status === "running") && (
         <p
           role="status"
-          className="flex items-center gap-2 rounded-lg border border-gray-200 p-4 text-gray-700 dark:border-gray-800 dark:text-gray-300"
+          className="flex items-center gap-2 rounded-md border bg-card p-4 text-foreground/80"
         >
-          <span
-            aria-hidden="true"
-            className="h-5 w-5 animate-spin rounded-full border-2 border-blue-600 border-t-transparent"
-          />
+          <Spinner className="size-5 text-primary" aria-hidden="true" />
           Checking this label…
         </p>
       )}
@@ -71,24 +71,17 @@ export function RowDetailView({ row, images, onBack, onRetry }: RowDetailViewPro
       )}
 
       {row.state.status === "error" && (
-        <div
-          role="alert"
-          className="rounded-lg bg-red-100 p-4 text-red-900 dark:bg-red-950 dark:text-red-200"
-        >
-          <p className="font-semibold">This label couldn&apos;t be checked</p>
-          <p className="mt-1 text-sm">{row.state.message}</p>
-        </div>
+        <Alert variant="destructive" className="border-destructive/30 bg-destructive/5">
+          <AlertTitle>This label couldn&apos;t be checked</AlertTitle>
+          <AlertDescription>{row.state.message}</AlertDescription>
+        </Alert>
       )}
 
       {row.state.status === "error" && onRetry && (
         <div>
-          <button
-            type="button"
-            onClick={onRetry}
-            className="rounded-lg bg-blue-700 px-6 py-3 text-base font-semibold text-white hover:bg-blue-800"
-          >
+          <Button type="button" size="lg" onClick={onRetry} className="h-11 px-6 text-base">
             Try this row again
-          </button>
+          </Button>
         </div>
       )}
     </div>

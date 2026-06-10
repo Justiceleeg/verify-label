@@ -6,6 +6,7 @@
 // errors and "edit and re-check" never lose the agent's input.
 
 import { useEffect, useRef, useState } from "react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { parseApplication } from "@/core/application";
 import type { VerificationResult } from "@/core/types";
 import { verifyLabelFiles, type VerifyFailureKind } from "@/lib/verifyLabel";
@@ -39,18 +40,18 @@ function ErrorBanner({ kind, message }: { kind: VerifyFailureKind; message: stri
   }, []);
   const hint = RECOVERY_HINTS[kind];
   return (
-    <div
+    <Alert
       ref={ref}
       tabIndex={-1}
-      role="alert"
-      className="rounded-lg bg-red-100 p-4 text-red-900 outline-none dark:bg-red-950 dark:text-red-200"
+      variant="destructive"
+      className="border-destructive/30 bg-destructive/5 outline-none"
     >
-      <p className="font-semibold">Couldn&apos;t check this label</p>
-      <p className="mt-1 text-sm">
+      <AlertTitle>Couldn&apos;t check this label</AlertTitle>
+      <AlertDescription>
         {message}
         {hint ? ` ${hint}` : ""}
-      </p>
-    </div>
+      </AlertDescription>
+    </Alert>
   );
 }
 

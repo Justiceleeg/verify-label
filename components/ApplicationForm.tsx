@@ -5,6 +5,10 @@
 // core's parseApplication so the form and the API reject the same things.
 
 import { useId } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Spinner } from "@/components/ui/spinner";
 import type { BeverageType } from "@/core/types";
 import { ImagePicker } from "./ImagePicker";
 
@@ -59,19 +63,19 @@ function Field({
 }) {
   return (
     <div>
-      <label htmlFor={id} className="mb-1 block text-sm font-medium">
+      <Label htmlFor={id} className="mb-1.5">
         {label}
-      </label>
+      </Label>
       <div className="flex items-center gap-2">
         {children}
         {suffix && (
-          <span className="whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+          <span className="whitespace-nowrap text-sm text-muted-foreground">
             {suffix}
           </span>
         )}
       </div>
       {error && (
-        <p id={`${id}-error`} className="mt-1 text-sm text-red-700 dark:text-red-400">
+        <p id={`${id}-error`} className="mt-1.5 text-sm text-destructive">
           {error}
         </p>
       )}
@@ -91,11 +95,6 @@ export function ApplicationForm({
 }: ApplicationFormProps) {
   const idPrefix = useId();
 
-  const inputClasses =
-    "w-full rounded-lg border border-gray-300 px-3 py-2.5 text-base " +
-    "focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 " +
-    "disabled:opacity-50 dark:border-gray-700 dark:bg-gray-950";
-
   function textInput(
     field: keyof Omit<FormValues, "beverage_type">,
     label: string,
@@ -105,7 +104,7 @@ export function ApplicationForm({
     const error = fieldErrors[field];
     return (
       <Field id={id} label={label} error={error} suffix={options.suffix}>
-        <input
+        <Input
           id={id}
           type={options.type ?? "text"}
           step={options.step}
@@ -115,7 +114,7 @@ export function ApplicationForm({
           disabled={busy}
           aria-invalid={error ? true : undefined}
           aria-describedby={error ? `${id}-error` : undefined}
-          className={inputClasses}
+          className="h-10 text-base"
         />
       </Field>
     );
@@ -133,17 +132,17 @@ export function ApplicationForm({
       {textInput("application_id", "Application ID", { placeholder: "e.g. APP-001" })}
 
       <fieldset>
-        <legend className="mb-1 block text-sm font-medium">Beverage type</legend>
+        <legend className="mb-1.5 block text-sm font-medium">Beverage type</legend>
         <div className="grid grid-cols-3 gap-2">
           {BEVERAGE_OPTIONS.map((option) => {
             const selected = values.beverage_type === option.value;
             return (
               <label
                 key={option.value}
-                className={`cursor-pointer rounded-lg border px-2 py-3 text-center text-sm font-medium ${
+                className={`cursor-pointer rounded-md border px-2 py-3 text-center text-sm font-medium transition-colors ${
                   selected
-                    ? "border-blue-600 bg-blue-50 text-blue-900 dark:bg-blue-950 dark:text-blue-200"
-                    : "border-gray-300 hover:border-gray-400 dark:border-gray-700 dark:hover:border-gray-500"
+                    ? "border-primary bg-primary/5 text-primary"
+                    : "border-input hover:border-ring/60 hover:bg-muted"
                 } ${busy ? "cursor-not-allowed opacity-50" : ""}`}
               >
                 <input
@@ -191,23 +190,16 @@ export function ApplicationForm({
         disabled={busy}
       />
 
-      <button
-        type="submit"
-        disabled={busy}
-        className="rounded-lg bg-blue-700 px-6 py-3.5 text-lg font-semibold text-white hover:bg-blue-800 disabled:opacity-60"
-      >
+      <Button type="submit" size="lg" disabled={busy} className="h-12 text-base">
         {busy ? (
           <span className="inline-flex items-center gap-2" role="status">
-            <span
-              aria-hidden="true"
-              className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent"
-            />
+            <Spinner className="size-5" aria-hidden="true" />
             {busyText}
           </span>
         ) : (
           "Check label"
         )}
-      </button>
+      </Button>
     </form>
   );
 }

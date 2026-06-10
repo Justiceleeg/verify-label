@@ -12,13 +12,13 @@ export default function BatchPage() {
       <p className="mb-6 text-sm">
         <Link
           href="/"
-          className="font-medium text-blue-700 underline dark:text-blue-400"
+          className="font-medium text-primary underline underline-offset-4 hover:text-primary/80"
         >
           ← Check a single label
         </Link>
       </p>
-      <h1 className="text-3xl font-bold">Check a batch</h1>
-      <p className="mt-2 mb-8 text-gray-600 dark:text-gray-400">
+      <h1 className="text-3xl font-bold tracking-tight">Check a batch</h1>
+      <p className="mt-3 mb-8 text-muted-foreground">
         Upload your applications CSV and the label images. Every row is
         checked field by field; you review whatever gets flagged.
       </p>

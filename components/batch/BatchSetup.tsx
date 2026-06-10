@@ -43,10 +43,10 @@ function Dropzone({
         setDragging(false);
         if (!disabled) handle(e.dataTransfer.files);
       }}
-      className={`flex min-h-24 cursor-pointer flex-col items-center justify-center gap-1 rounded-lg border-2 border-dashed p-4 text-center text-sm ${
+      className={`flex min-h-24 cursor-pointer flex-col items-center justify-center gap-1 rounded-md border-2 border-dashed p-4 text-center text-sm transition-colors ${
         dragging
-          ? "border-blue-500 bg-blue-50 dark:bg-blue-950"
-          : "border-gray-300 hover:border-gray-400 dark:border-gray-700 dark:hover:border-gray-500"
+          ? "border-ring bg-accent"
+          : "border-input hover:border-ring/60 hover:bg-muted/50"
       } ${disabled ? "cursor-not-allowed opacity-50" : ""}`}
     >
       <input
@@ -58,8 +58,8 @@ function Dropzone({
         disabled={disabled}
         className="sr-only"
       />
-      <span className="font-medium text-blue-700 dark:text-blue-400">{prompt}</span>
-      <span className="text-gray-500 dark:text-gray-400">{hint}</span>
+      <span className="font-medium text-primary">{prompt}</span>
+      <span className="text-muted-foreground">{hint}</span>
     </label>
   );
 }
@@ -95,15 +95,15 @@ export function BatchSetup({
   return (
     <div className="grid gap-5 sm:grid-cols-2">
       <div>
-        <span className="mb-1 block text-sm font-medium">Applications CSV</span>
+        <span className="mb-1.5 block text-sm font-medium">Applications CSV</span>
         {csvName ? (
-          <div className="flex items-center justify-between gap-3 rounded-lg border border-gray-300 p-3 dark:border-gray-700">
+          <div className="flex items-center justify-between gap-3 rounded-md border bg-card p-3">
             <p className="min-w-0 truncate text-sm">{csvName}</p>
             <button
               type="button"
               onClick={onCsvCleared}
               disabled={disabled}
-              className="text-sm font-medium text-blue-700 underline disabled:opacity-50 dark:text-blue-400"
+              className="text-sm font-medium text-primary underline underline-offset-4 hover:text-primary/80 disabled:opacity-50"
             >
               Remove
             </button>
@@ -118,9 +118,9 @@ export function BatchSetup({
           />
         )}
         {csvError ? (
-          <p className="mt-1 text-sm text-red-700 dark:text-red-400">{csvError}</p>
+          <p className="mt-1.5 text-sm text-destructive">{csvError}</p>
         ) : (
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+          <p className="mt-1.5 text-sm text-muted-foreground">
             One row per application, with an image_files column naming each
             row&apos;s label photos.
           </p>
@@ -128,7 +128,7 @@ export function BatchSetup({
       </div>
 
       <div>
-        <span className="mb-1 block text-sm font-medium">Label images</span>
+        <span className="mb-1.5 block text-sm font-medium">Label images</span>
         <Dropzone
           accept="image/*,.zip,application/zip"
           multiple
@@ -144,22 +144,22 @@ export function BatchSetup({
               type="button"
               onClick={onImagesCleared}
               disabled={disabled}
-              className="font-medium text-blue-700 underline disabled:opacity-50 dark:text-blue-400"
+              className="font-medium text-primary underline underline-offset-4 hover:text-primary/80 disabled:opacity-50"
             >
               Clear all
             </button>
           </p>
         )}
         {imagesError ? (
-          <p className="mt-1 text-sm text-red-700 dark:text-red-400">{imagesError}</p>
+          <p className="mt-1.5 text-sm text-destructive">{imagesError}</p>
         ) : ignored.length > 0 ? (
-          <p className="mt-1 text-sm text-amber-700 dark:text-amber-400">
+          <p className="mt-1.5 text-sm text-warning">
             {`Skipped ${ignored.length} file${ignored.length === 1 ? "" : "s"} that ` +
               `${ignored.length === 1 ? "isn't" : "aren't"} images: ` +
               `${ignored.slice(0, 3).join(", ")}${ignored.length > 3 ? "…" : ""}`}
           </p>
         ) : (
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+          <p className="mt-1.5 text-sm text-muted-foreground">
             Every photo the CSV mentions — front and back where you have both.
           </p>
         )}
