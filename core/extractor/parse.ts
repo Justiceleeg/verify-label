@@ -58,13 +58,12 @@ function parseWarning(raw: unknown): ExtractedWarning {
   const record = raw as Record<string, unknown>;
   const warning: ExtractedWarning = {
     ...base,
-    headingAllCaps: parseFlag(record.heading_all_caps, "government_warning.heading_all_caps"),
     headingBold: parseFlag(record.heading_bold, "government_warning.heading_bold"),
     remainderBold: parseFlag(record.remainder_bold, "government_warning.remainder_bold"),
   };
   // Formatting observations are meaningless without a reading.
   if (warning.value === null) {
-    return { ...warning, headingAllCaps: null, headingBold: null, remainderBold: null };
+    return { ...warning, headingBold: null, remainderBold: null };
   }
   return warning;
 }

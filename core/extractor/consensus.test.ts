@@ -55,7 +55,6 @@ describe("voteWarning", () => {
     value,
     confidence,
     sourceImage: value === null ? null : 1,
-    headingAllCaps: value === null ? null : true,
     headingBold,
     remainderBold: value === null ? null : false,
   });
@@ -90,7 +89,6 @@ describe("createConsensusExtractor", () => {
           net_contents: f("750 mL"),
           government_warning: {
             ...f("GOVERNMENT WARNING: …"),
-            headingAllCaps: true,
             headingBold: true,
             remainderBold: false,
           },

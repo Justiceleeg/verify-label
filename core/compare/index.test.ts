@@ -59,7 +59,6 @@ describe("compare — end to end", () => {
       labelFields({
         government_warning: warningField(
           GOVERNMENT_WARNING.replace("GOVERNMENT WARNING:", "Government Warning:"),
-          { headingAllCaps: false },
         ),
       }),
     );

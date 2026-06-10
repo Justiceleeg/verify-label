@@ -92,7 +92,7 @@ irrelevant by construction:
 - Browser → API route: one multipart POST per label (~200–400KB downscaled
   JPEG), `await request.formData()`. The downscale is what keeps phone photos
   under the 4.5MB body cap.
-- API route → Anthropic: image as base64 in the JSON body (~+33%). Input
+- API route → vision API: image as base64 in the JSON body (~+33%). Input
   images cannot be streamed to the API; irrelevant at this size.
 - Response: small structured JSON (a few hundred tokens) — plain
   non-streaming call.
@@ -118,7 +118,7 @@ a slow connection stretches the batch but never breaks it.
 - **Confidently wrong extraction**: mitigated by design — no verdict
   auto-approves; worst case the agent re-checks a flagged field, which is the
   manual status quo.
-- **Accepted single point of failure**: the Anthropic API itself. Documented
+- **Accepted single point of failure**: the upstream vision API itself. Documented
   trade-off; the pluggable extractor is the mitigation path.
 
 ## API
@@ -160,7 +160,8 @@ the affected row only.
   confidence; it renders no compliance judgment.
 - **Comparison (deterministic code):** case-folding, punctuation stripping,
   ABV/proof arithmetic (proof = 2 × ABV), net-contents unit normalization
-  (mL↔L, and fl oz/pints/quarts/gallons for malt per §7.70), verbatim
+  (mL↔L, and fl oz/pints/quarts/gallons for malt per §7.70) with dual
+  metric/customary statements cross-checked against each other, verbatim
   §16.21 warning compare (whitespace-normalized exact match; caps checked in
   code; bold is LLM-reported best-effort with a stated confidence caveat),
   beverage-type rules (e.g., wine ≤14% ABV may omit alcohol content when

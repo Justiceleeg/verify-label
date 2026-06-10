@@ -88,7 +88,6 @@ export const EXTRACTION_TOOL: Anthropic.Messages.Tool = {
           "value",
           "confidence",
           "source_image",
-          "heading_all_caps",
           "heading_bold",
           "remainder_bold",
         ],
@@ -96,11 +95,6 @@ export const EXTRACTION_TOOL: Anthropic.Messages.Tool = {
           ...FIELD_SCHEMA(
             'The complete government health warning statement transcribed character-for-character FROM THE IMAGE — never from memory. Start the value with the heading exactly as printed (e.g. "GOVERNMENT WARNING:" or however it actually appears) — the heading is part of the statement, not a separate element. Labels sometimes deviate from the standard wording by a single word or letter case; reproduce the deviation exactly.',
           ).properties,
-          heading_all_caps: {
-            type: ["boolean", "null"],
-            description:
-              'Whether the "GOVERNMENT WARNING" heading is printed entirely in capital letters. null when the warning is absent or unreadable.',
-          },
           heading_bold: {
             type: ["boolean", "null"],
             description:
@@ -135,7 +129,7 @@ Rules:
 
 6. alcohol_content and proof are separate fields. alcohol_content is the percentage alcohol-by-volume statement in any of its printed forms (abbreviated, spelled out, or a range). proof is a distinct "X Proof" statement. Report each only if it is printed; never compute one from the other.
 
-7. Government warning formatting observations: heading_all_caps is whether "GOVERNMENT WARNING" is entirely in capitals (this is usually readable). heading_bold and remainder_bold are best-effort calls about bold type from a photograph, and the reliable signal is the weight CONTRAST between the heading and the text after it — judge them together, not in isolation. Heading noticeably heavier than the body: heading_bold true, remainder_bold false. Heading and body the same weight: if that shared weight is light, heading_bold false; if everything is heavy, remainder_bold true. Use null only when the print is too small or degraded to compare weights at all.`;
+7. Government warning bold observations: heading_bold and remainder_bold are best-effort calls about bold type from a photograph, and the reliable signal is the weight CONTRAST between the heading and the text after it — judge them together, not in isolation. Heading noticeably heavier than the body: heading_bold true, remainder_bold false. Heading and body the same weight: if that shared weight is light, heading_bold false; if everything is heavy, remainder_bold true. Use null only when the print is too small or degraded to compare weights at all.`;
 
 /** The per-request user text. Only the beverage type is shared with the
  * model — never application field values, which would bias transcription. */

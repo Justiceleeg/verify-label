@@ -30,10 +30,10 @@ export interface ExtractedField {
   sourceImage: number | null;
 }
 
-/** Government warning needs formatting observations beyond the raw text. */
+/** Government warning needs formatting observations beyond the raw text.
+ * Caps are checked in code from the transcription itself — only bold needs
+ * a separate observation. */
 export interface ExtractedWarning extends ExtractedField {
-  /** Whether "GOVERNMENT WARNING" appears in all caps. */
-  headingAllCaps: boolean | null;
   /** Bold detection is best-effort from photos; null = couldn't tell. */
   headingBold: boolean | null;
   remainderBold: boolean | null;

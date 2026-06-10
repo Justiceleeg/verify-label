@@ -892,5 +892,22 @@
       "government_warning": "match",
       "same_field_of_vision": "match"
     }
+  },
+  {
+    "application_id": "APP-055",
+    "note": "Subtle seeded error: the metric statement matches the application (750 mL) but its US-customary supplement reads 12 FL. OZ. instead of 25.4 — the label contradicts itself.",
+    "image_files": [
+      "app-055-front.png",
+      "app-055-back.png"
+    ],
+    "overall": "fail",
+    "verdicts": {
+      "brand_name": "match",
+      "class_type": "match",
+      "alcohol_content": "match",
+      "net_contents": "mismatch",
+      "government_warning": "match",
+      "same_field_of_vision": "match"
+    }
   }
 ]

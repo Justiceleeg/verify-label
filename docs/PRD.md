@@ -137,6 +137,9 @@ No bare overall pass/fail that hides field detail; overall status is derived
   doesn't review these in COLAs; applicant's responsibility).
 - Prohibited-practices judgment (misleading claims, health claims, etc.).
 - Content-based image↔application auto-pairing (cross-check only; see Batch).
+- **Wine ABV ranges straddling the 14% tax class** (§4.36): the range checks
+  cover width and containment; that a range may not cross the 14% tax-class
+  boundary is not checked. Possible v2 one-liner in the range branch.
 - **ABV tolerances** (±0.3% spirits/beer §5.65/§7.65; ±1.0/1.5% wine §4.36):
   these govern actual product vs. label (lab analysis), not label vs.
   application matching — the tool's job is the latter.

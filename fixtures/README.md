@@ -1,6 +1,6 @@
 # Fixtures
 
-Sample batch for the label verifier: 54 application rows backed by 102
+Sample batch for the label verifier: 55 application rows backed by 104
 rendered label images, with expected verdicts for every row. Strategy per
 [docs/ARCHITECTURE.md](../docs/ARCHITECTURE.md) ("Test fixtures"): two
 tracks, flat programmatic labels for correctness and CSS photo-realism
@@ -45,15 +45,17 @@ so regenerating only matters after editing `cases.ts` or the templates.
   single-image bottles and cans, a wine alcohol range on the back label
   (legal — no field-of-vision rule for wine), dual-unit net contents,
   legal alcohol omissions, decoy small print, and two with photo effects.
-- Subtle content errors (APP-050–054), legible but easy to autocorrect:
+- Subtle content errors (APP-050–055), legible but easy to autocorrect:
   44.5% printed against a 45% application (internally consistent proof, on
   a curved bottle), a proof line off by two against a matching alc/vol
   statement, a warning missing the single word "operate", a warning with
-  "alcohol" substituted for "alcoholic beverages", and 350 mL against a
-  375 mL application. These exist to punish a vision extractor that
-  normalizes or autocorrects instead of transcribing faithfully.
+  "alcohol" substituted for "alcoholic beverages", 350 mL against a
+  375 mL application, and a dual net-contents statement whose US-customary
+  supplement contradicts its matching metric primary. These exist to punish
+  a vision extractor that normalizes or autocorrects instead of
+  transcribing faithfully.
 - All four verdict categories (✅ ⚠️ ❌ ❓) and all three overall statuses:
-  21 pass / 11 needs-review / 22 fail.
+  21 pass / 11 needs-review / 23 fail.
 - A wrong-image-attached row (APP-019 references APP-005's images).
 - One single-image row (APP-012, beer can) among front+back pairs.
 - A perception case (APP-017) whose alcohol statement is printed but

@@ -70,6 +70,26 @@ describe("compareNetContents — malt beverages (§7.70: US customary required)"
   });
 });
 
+describe("compareNetContents — dual-statement internal consistency", () => {
+  it("supplement contradicting the primary → mismatch, even when the primary matches the application", () => {
+    const v = compareNetContents(spirits("750 mL"), field("750 mL (12 FL. OZ.)"));
+    expect(v.status).toBe("mismatch");
+    expect(v.explanation).toMatch(/contradicts itself/i);
+  });
+
+  it("contradictory dual statement on a malt label → mismatch", () => {
+    const v = compareNetContents(malt("12 fl oz"), field("12 FL OZ (500 mL)"));
+    expect(v.status).toBe("mismatch");
+    expect(v.explanation).toMatch(/contradicts itself/i);
+  });
+
+  it("rounded-but-consistent dual statement is not flagged", () => {
+    expect(
+      compareNetContents(spirits("1 L"), field("1 L (33.8 FL. OZ.)")).status,
+    ).toBe("match");
+  });
+});
+
 describe("compareNetContents — degenerate inputs", () => {
   it("unparseable label text → probable match for human review", () => {
     expect(compareNetContents(spirits("750 mL"), field("seven fifty")).status).toBe(

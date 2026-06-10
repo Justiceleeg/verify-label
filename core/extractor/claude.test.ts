@@ -42,7 +42,6 @@ const APP_001_INPUT = {
     value: GOVERNMENT_WARNING,
     confidence: "high",
     source_image: 1,
-    heading_all_caps: true,
     heading_bold: true,
     remainder_bold: false,
   },

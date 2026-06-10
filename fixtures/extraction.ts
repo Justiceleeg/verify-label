@@ -56,15 +56,13 @@ export function idealExtraction(c: FixtureCase): LabelFields {
   const warningIndex = sides.findIndex((s) => s.warning !== undefined);
   const government_warning: ExtractedWarning =
     warningIndex === -1
-      ? { ...ABSENT, headingAllCaps: null, headingBold: null, remainderBold: null }
+      ? { ...ABSENT, headingBold: null, remainderBold: null }
       : sides[warningIndex].unreadable?.includes("warning")
-      ? { ...UNREADABLE, headingAllCaps: null, headingBold: null, remainderBold: null }
+      ? { ...UNREADABLE, headingBold: null, remainderBold: null }
       : {
           value: sides[warningIndex].warning!.text,
           confidence: "high",
           sourceImage: warningIndex,
-          headingAllCaps:
-            sides[warningIndex].warning!.text.startsWith("GOVERNMENT WARNING"),
           headingBold: sides[warningIndex].warning!.headingBold ?? true,
           remainderBold: sides[warningIndex].warning!.remainderBold ?? false,
         };

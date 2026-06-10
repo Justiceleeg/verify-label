@@ -23,7 +23,6 @@ export function warningField(
 ): ExtractedWarning {
   return {
     ...field(value, overrides.confidence ?? "high", 1),
-    headingAllCaps: value !== null ? value.startsWith("GOVERNMENT WARNING") : null,
     headingBold: true,
     remainderBold: false,
     ...overrides,

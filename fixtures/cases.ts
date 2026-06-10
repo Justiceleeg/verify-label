@@ -1502,6 +1502,29 @@ export const FIXTURE_CASES: FixtureCase[] = [
     ],
     expected: { overall: "fail", verdicts: { net_contents: "mismatch" } },
   },
+  {
+    application: {
+      application_id: "APP-055",
+      beverage_type: "spirits",
+      brand_name: "Sawmill Bend",
+      class_type: "Straight Bourbon Whiskey",
+      abv: 44,
+      net_contents: "750 mL",
+    },
+    note: "Subtle seeded error: the metric statement matches the application (750 mL) but its US-customary supplement reads 12 FL. OZ. instead of 25.4 — the label contradicts itself.",
+    style: "vintage",
+    sides: [
+      {
+        brandName: "Sawmill Bend",
+        classType: "Straight Bourbon Whiskey",
+        alcohol: "Alc. 44% by Vol.",
+        proof: "88 Proof",
+        netContents: "750 mL (12 FL. OZ.)",
+      },
+      { warning: WARNING },
+    ],
+    expected: { overall: "fail", verdicts: { net_contents: "mismatch" } },
+  },
 ];
 
 /** Resolve a case's label sides, following `imagesFrom` indirection. */

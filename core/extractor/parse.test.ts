@@ -18,7 +18,6 @@ function validInput() {
       value: "GOVERNMENT WARNING: ...",
       confidence: "high",
       source_image: 1,
-      heading_all_caps: true,
       heading_bold: true,
       remainder_bold: false,
     },
@@ -38,7 +37,6 @@ describe("parseLabelFields", () => {
       value: "GOVERNMENT WARNING: ...",
       confidence: "high",
       sourceImage: 1,
-      headingAllCaps: true,
       headingBold: true,
       remainderBold: false,
     });
@@ -63,12 +61,10 @@ describe("parseLabelFields", () => {
       value: null,
       confidence: "low",
       source_image: null,
-      heading_all_caps: true,
       heading_bold: true,
       remainder_bold: false,
     } as never;
     const warning = parseLabelFields(input).government_warning;
-    expect(warning.headingAllCaps).toBeNull();
     expect(warning.headingBold).toBeNull();
     expect(warning.remainderBold).toBeNull();
   });

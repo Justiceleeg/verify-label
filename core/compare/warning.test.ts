@@ -42,7 +42,7 @@ describe("compareWarning", () => {
       "GOVERNMENT WARNING:",
       "Government Warning:",
     );
-    const v = compareWarning(warningField(titleCase, { headingAllCaps: false }));
+    const v = compareWarning(warningField(titleCase));
     expect(v.status).toBe("mismatch");
     expect(v.explanation).toMatch(/capital letters/i);
     expect(v.explanation).toContain("Government Warning");

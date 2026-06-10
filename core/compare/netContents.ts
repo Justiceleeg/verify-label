@@ -81,6 +81,26 @@ export function compareNetContents(
     );
   }
 
+  const inMl = (ml: number) => `${Math.round(ml * 10) / 10} mL`;
+
+  // A dual statement's two systems must agree with each other (within the
+  // same rounding slack dual statements get below) — a supplement that
+  // contradicts the primary is a printing error even when the primary
+  // matches the application, like a proof line contradicting the alc/vol.
+  if (
+    labelMetric !== null &&
+    labelCustomary !== null &&
+    Math.abs(labelMetric - labelCustomary) > Math.max(labelMetric * 0.01, 0.5)
+  ) {
+    return verdict(
+      "net_contents",
+      "mismatch",
+      extracted.value,
+      appValue,
+      `The label contradicts itself — its metric statement (${inMl(labelMetric)}) and US-customary statement (≈${inMl(labelCustomary)}) aren't the same quantity.`,
+    );
+  }
+
   // Dual statements are rounded (750 mL ↔ 25.4 fl oz), so allow 1% slack
   // when the two values come from different measurement systems.
   const crossSystem =
@@ -100,7 +120,6 @@ export function compareNetContents(
     );
   }
 
-  const inMl = (ml: number) => `${Math.round(ml * 10) / 10} mL`;
   return verdict(
     "net_contents",
     "mismatch",
