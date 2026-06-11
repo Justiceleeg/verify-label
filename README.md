@@ -52,6 +52,10 @@ files live in [`fixtures/`](fixtures/).
 | Government warning | **Verbatim** match to 27 CFR §16.21; "GOVERNMENT WARNING" must be all caps and bold; mismatch explanations pinpoint the first divergence |
 | Same field of vision (spirits) | Brand, class/type, and alcohol content must appear on the same label side (§5.63) |
 
+Bottler/importer name & address and country of origin — the remaining common
+label elements — are documented stretch goals, not yet checked
+([PRD check #7](docs/PRD.md#verification-checks)).
+
 Citations and the full rule matrix: [docs/PRD.md](docs/PRD.md#verification-checks).
 
 ## Approach
@@ -90,6 +94,11 @@ vote (`votes=3` on the API) — voting cancels run-to-run flakiness on the
 interactive path; batch rows stay at one call each for cost.
 Numbers and reasoning: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#extractor-benchmark-54-case-fixture-batch-june-2026).
 Reproduce with `pnpm extract:eval` (live API).
+
+**Tools used:** Next.js (App Router) + TypeScript, deployed on Vercel;
+shadcn/ui (Radix + Tailwind CSS) for the UI; PapaParse (CSV) and fflate (zip)
+for client-side batch handling; OpenAI and Anthropic SDKs behind the extractor
+interface; Vitest for tests; Playwright to render the fixture label images.
 
 ## Assumptions
 
@@ -166,6 +175,7 @@ CSS photo-realism effects for perception stress tests):
 
 ## Deployment
 
-Vercel, zero config: `vercel deploy --prod` with `OPENAI_API_KEY` set as a
-server-side environment variable. The same repo deploys as a Docker container
-unchanged if ever needed.
+Vercel, zero config: every push to `main` deploys to production via the git
+integration, with `OPENAI_API_KEY` set as a server-side environment variable
+(`vercel deploy --prod` works for manual deploys too). The same repo deploys
+as a Docker container unchanged if ever needed.
