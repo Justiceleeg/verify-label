@@ -6,6 +6,8 @@ COLA application data, upload the label artwork, and get per-field verdicts —
 explanations for anything flagged. The agent stays the decision-maker; the
 tool does the rote matching.
 
+**Live demo:** https://verify-label.vercel.app
+
 Requirements live in [docs/PRD.md](docs/PRD.md), technical design in
 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), build order in
 [docs/PLAN.md](docs/PLAN.md).
@@ -120,9 +122,11 @@ Reproduce with `pnpm extract:eval` (live API).
   obscured field ❌ (absent) instead of ❓ (unreadable). Both verdicts route
   the row to a human; it never hallucinates a reading, which is the failure
   mode that would matter.
-- **Public demo endpoint spends real money**, so `/api/verify` carries a
-  per-IP token bucket, payload validation (max 2 images, 4MB each, MIME
-  allowlist), and a spending cap on the API key in the provider console.
+- **Public demo endpoint spends real money**, so `/api/verify` carries
+  invisible bot verification ([Vercel BotID](https://vercel.com/docs/botid) —
+  scripted clients get a 403, humans see nothing), a per-IP token bucket,
+  payload validation (max 2 images, 4MB each, MIME allowlist), and a spending
+  cap on the API key in the provider console.
 
 ## Production paths
 
