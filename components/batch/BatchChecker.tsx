@@ -263,24 +263,22 @@ export function BatchChecker() {
           >
             {`Quick sample · ${QUICK_BATCH_IDS.length} labels`}
           </Button>
-          {/* The full batch is ~95MB of original PNGs — fine off local disk,
-              a 30–60s download from a deployed instance. Dev-only. */}
-          {process.env.NODE_ENV === "development" && (
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              disabled={!!sampleProgress}
-              onClick={() =>
-                loadSample(
-                  DEMO_CASES.map((c) => c.application.application_id),
-                  "sample-batch-full.csv",
-                )
-              }
-            >
-              {`Full sample · ${DEMO_CASES.length} labels`}
-            </Button>
-          )}
+          {/* The full batch is ~95MB of original PNGs — expect a 30–60s
+              download from a deployed instance. */}
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            disabled={!!sampleProgress}
+            onClick={() =>
+              loadSample(
+                DEMO_CASES.map((c) => c.application.application_id),
+                "sample-batch-full.csv",
+              )
+            }
+          >
+            {`Full sample · ${DEMO_CASES.length} labels`}
+          </Button>
         </div>
       </div>
       {sampleError && <p className="text-sm text-destructive">{sampleError}</p>}

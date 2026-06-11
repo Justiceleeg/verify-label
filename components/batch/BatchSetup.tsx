@@ -5,6 +5,7 @@
 // a missing file in the pre-flight report, and add just that one image.
 
 import { useRef, useState } from "react";
+import { CsvFormatDialog } from "./CsvFormatDialog";
 
 function Dropzone({
   onFiles,
@@ -92,10 +93,22 @@ export function BatchSetup({
   imagesError,
   disabled,
 }: BatchSetupProps) {
+  const [showFormat, setShowFormat] = useState(false);
+
   return (
     <div className="grid gap-5 sm:grid-cols-2">
       <div>
-        <span className="mb-1.5 block text-sm font-medium">Applications CSV</span>
+        <div className="mb-1.5 flex items-baseline justify-between gap-3">
+          <span className="text-sm font-medium">Applications CSV</span>
+          <button
+            type="button"
+            onClick={() => setShowFormat(true)}
+            className="text-sm font-medium text-primary underline underline-offset-4 hover:text-primary/80"
+          >
+            What goes in the CSV?
+          </button>
+        </div>
+        {showFormat && <CsvFormatDialog onClose={() => setShowFormat(false)} />}
         {csvName ? (
           <div className="flex items-center justify-between gap-3 rounded-md border bg-card p-3">
             <p className="min-w-0 truncate text-sm">{csvName}</p>
