@@ -128,7 +128,10 @@ a slow connection stretches the batch but never breaks it.
 `POST /api/verify` — multipart/form-data
 
 Request: `application` (JSON: `application_id, beverage_type, brand_name,
-class_type, abv, net_contents`) + `images[]` (1–2 files, front/back).
+class_type, abv, net_contents`) + `images[]` (1–2 files, front/back) +
+optional `votes` (integer 1–3, default 1): N parallel extractions with a
+majority vote per field (`consensus.ts`). The single-label form sends 3;
+the batch client omits it to keep per-row cost at one model call.
 
 Response:
 
@@ -213,9 +216,11 @@ text — disqualifying), caught every seeded content error including
 single-word warning edits, and was the only small model to catch the
 non-bold warning heading. Consensus voting (`consensus.ts`) cures
 small-model run-to-run flakiness but not latency — parallel votes cost
-max-of-N wall clock. Possible v2: escalate to a frontier model when any
-field returns null (the trigger is detectable in plain code), keeping the
-fast path at 3.9s.
+max-of-N wall clock. The single-label form opts in (`votes=3` on the API):
+an interactive one-off check trades a slower tail for stable answers, while
+batch rows stay single-shot to hold cost and the ≤5s budget. Possible v2:
+escalate to a frontier model when any field returns null (the trigger is
+detectable in plain code), keeping the fast path at 3.9s.
 
 ## Latency budget (≤5s per label)
 

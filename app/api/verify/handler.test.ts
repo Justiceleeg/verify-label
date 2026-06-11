@@ -16,16 +16,17 @@ function imageFile(name = "front.png", type = PNG, bytes = 16): File {
 }
 
 function verifyRequest(
-  opts: { application?: unknown; images?: File[]; ip?: string } = {},
+  opts: { application?: unknown; images?: File[]; ip?: string; votes?: string } = {},
 ): Request {
   // `application: undefined` means "send no application field at all".
   const app = "application" in opts ? opts.application : application();
-  const { images = [imageFile()], ip } = opts;
+  const { images = [imageFile()], ip, votes } = opts;
   const form = new FormData();
   if (app !== undefined) {
     form.set("application", typeof app === "string" ? app : JSON.stringify(app));
   }
   for (const image of images) form.append("images", image);
+  if (votes !== undefined) form.set("votes", votes);
   return new Request("http://test/api/verify", {
     method: "POST",
     body: form,
@@ -144,6 +145,26 @@ describe("createVerifyHandler", () => {
     );
     expect(response.status).toBe(413);
     expect((await body(response)).error).toContain("Downscale");
+  });
+
+  it("runs consensus extraction when the votes field is set", async () => {
+    const extract = vi.fn(async () => labelFields());
+    const handler = createVerifyHandler({ extractor: stubExtractor(extract) });
+    const response = await handler(verifyRequest({ votes: "3" }));
+    expect(response.status).toBe(200);
+    expect(extract).toHaveBeenCalledTimes(3);
+    expect((await body(response)).overall).toBe("pass");
+  });
+
+  it("rejects an invalid votes field with 400", async () => {
+    const extract = vi.fn(async () => labelFields());
+    const handler = createVerifyHandler({ extractor: stubExtractor(extract) });
+    for (const votes of ["0", "4", "2.5", "two"]) {
+      const response = await handler(verifyRequest({ votes }));
+      expect(response.status).toBe(400);
+      expect((await body(response)).error).toContain('"votes"');
+    }
+    expect(extract).not.toHaveBeenCalled();
   });
 
   it("rate limits per IP with 429 and Retry-After", async () => {

@@ -6,6 +6,7 @@
 import { parseApplication } from "@/core/application";
 import { compare } from "@/core/compare";
 import {
+  createConsensusExtractor,
   createDefaultExtractor,
   ExtractionError,
   type Extractor,
@@ -21,6 +22,9 @@ const ALLOWED_IMAGE_TYPES = new Set<string>([
 ]) as ReadonlySet<string>;
 
 export const MAX_IMAGES = 2;
+/** Cap on per-request consensus votes — every vote is a full model call,
+ * so this bounds the upstream cost any one request can trigger. */
+export const MAX_VOTES = 3;
 /** Per image. The client downscales to ~200–400KB; Vercel caps the whole
  * body at ~4.5MB regardless, so this just produces the better error. */
 export const MAX_IMAGE_BYTES = 4 * 1024 * 1024;
@@ -108,6 +112,18 @@ export function createVerifyHandler(deps: VerifyHandlerDeps = {}) {
       }
     }
 
+    // Optional N-way consensus (core/extractor/consensus.ts): the single-label
+    // form sends 3 — parallel votes cancel small-model flakiness on an
+    // interactive check; the batch client omits it to keep per-row cost at 1×.
+    const rawVotes = form.get("votes");
+    let votes = 1;
+    if (rawVotes !== null) {
+      votes = typeof rawVotes === "string" ? Number(rawVotes) : NaN;
+      if (!Number.isInteger(votes) || votes < 1 || votes > MAX_VOTES) {
+        return error(400, `The "votes" field must be an integer from 1 to ${MAX_VOTES}.`);
+      }
+    }
+
     const images: LabelImage[] = await Promise.all(
       files.map(async (file) => ({
         data: Buffer.from(await file.arrayBuffer()).toString("base64"),
@@ -117,7 +133,11 @@ export function createVerifyHandler(deps: VerifyHandlerDeps = {}) {
 
     try {
       extractor ??= createDefaultExtractor();
-      const extracted = await extractor.extract(images, parsed.data.beverage_type);
+      // votes === 1 returns the base extractor unwrapped — no overhead.
+      const extracted = await createConsensusExtractor(extractor, votes).extract(
+        images,
+        parsed.data.beverage_type,
+      );
       return Response.json(compare(parsed.data, extracted));
     } catch (err) {
       if (err instanceof ExtractionError) {

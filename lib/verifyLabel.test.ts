@@ -43,6 +43,13 @@ describe("verifyLabel", () => {
     const form = bodies[0];
     expect(JSON.parse(form.get("application") as string)).toEqual(app);
     expect(form.getAll("images")).toHaveLength(2);
+    expect(form.get("votes")).toBeNull();
+  });
+
+  it("sends the votes field when consensus is requested", async () => {
+    const { impl, bodies } = fetchSequence(jsonResponse(200, sampleResult));
+    await verifyLabel(app, [image()], { fetchImpl: impl, votes: 3 });
+    expect(bodies[0].get("votes")).toBe("3");
   });
 
   it("maps 400 to a non-retryable validation failure with the server message", async () => {

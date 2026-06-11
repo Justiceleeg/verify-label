@@ -85,6 +85,9 @@ benchmark over the fixture batch (54 verdict-scored cases, live API): 3.9s
 per label, the only config under the ≤5s budget, ~$0.01/label, zero
 hallucinated readings, every seeded content error caught. Claude
 implementations (including an N-vote consensus wrapper) ship alongside.
+Single-label checks run 3 parallel extractions with a per-field majority
+vote (`votes=3` on the API) — voting cancels run-to-run flakiness on the
+interactive path; batch rows stay at one call each for cost.
 Numbers and reasoning: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#extractor-benchmark-54-case-fixture-batch-june-2026).
 Reproduce with `pnpm extract:eval` (live API).
 

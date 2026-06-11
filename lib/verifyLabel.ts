@@ -24,6 +24,10 @@ export interface VerifyOptions {
   delay?: (ms: number) => Promise<void>;
   /** Called when a transient failure triggers the automatic retry. */
   onRetry?: (failure: Extract<VerifyOutcome, { ok: false }>) => void;
+  /** Server-side consensus votes (1–3, default 1). The single-label form
+   * sends 3 — parallel extractions with majority vote per field; batch rows
+   * stay at 1 to keep per-row cost down. */
+  votes?: number;
 }
 
 const DEFAULT_RETRY_AFTER_S = 5;
@@ -121,6 +125,9 @@ export async function verifyLabel(
   body.set("application", JSON.stringify(app));
   for (const image of images) {
     body.append("images", image, "label.jpg");
+  }
+  if (opts.votes !== undefined && opts.votes > 1) {
+    body.set("votes", String(opts.votes));
   }
 
   const first = await attempt(body, opts);

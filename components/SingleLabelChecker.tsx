@@ -160,7 +160,7 @@ export function SingleLabelChecker() {
     const outcome = await verifyLabelFiles(
       parsed.data,
       files.back ? [files.front, files.back] : [files.front],
-      { onRetry: () => setPhase({ name: "checking", retrying: true }) },
+      { votes: 3, onRetry: () => setPhase({ name: "checking", retrying: true }) },
     );
     if (outcome.ok) {
       setPhase({ name: "results", result: outcome.result });
