@@ -3,18 +3,25 @@
 // One image slot (front or back label): a large click-to-browse target that
 // also accepts drag-and-drop, with a thumbnail preview once a file is picked.
 
-import { useEffect, useId, useMemo, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
+import { ZoomableImage } from "./ImageLightbox";
 
 const ACCEPTED_TYPES = ["image/png", "image/jpeg", "image/webp", "image/gif"];
 
 /** Object URL for a File, revoked automatically when it changes/unmounts. */
 export function useObjectUrl(file: File | null): string | null {
-  const url = useMemo(() => (file ? URL.createObjectURL(file) : null), [file]);
+  const [url, setUrl] = useState<string | null>(null);
   useEffect(() => {
+    const next = file ? URL.createObjectURL(file) : null;
+    // Create and revoke must live in the same effect: a useMemo'd URL survives
+    // StrictMode's cleanup/setup replay already revoked, which breaks any
+    // consumer that mounts later (e.g. the field review dialog).
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setUrl(next);
     return () => {
-      if (url) URL.revokeObjectURL(url);
+      if (next) URL.revokeObjectURL(next);
     };
-  }, [url]);
+  }, [file]);
   return url;
 }
 
@@ -64,9 +71,7 @@ export function ImagePicker({
       {file ? (
         <div className="flex items-center gap-4 rounded-md border bg-card p-3">
           {previewUrl && (
-            // Session-only blob preview; next/image adds nothing for object URLs.
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <ZoomableImage
               src={previewUrl}
               alt={`${label} preview`}
               className="h-24 w-24 rounded-sm object-contain"

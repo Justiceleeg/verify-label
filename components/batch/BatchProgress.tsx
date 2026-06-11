@@ -70,10 +70,10 @@ export function BatchProgress({
 
       <ul className="flex flex-wrap gap-x-4 gap-y-1 text-sm">
         {TALLY_ORDER.map((outcome) => {
-          const { emoji, text } = OUTCOME_BADGE[outcome];
+          const { icon: Icon, text, iconClasses } = OUTCOME_BADGE[outcome];
           return (
-            <li key={outcome} className="flex items-center gap-1">
-              <span aria-hidden="true">{emoji}</span>
+            <li key={outcome} className="flex items-center gap-1.5">
+              <Icon aria-hidden="true" className={`size-4 ${iconClasses}`} />
               <span>{`${byOutcome[outcome]} ${text.toLowerCase()}`}</span>
             </li>
           );

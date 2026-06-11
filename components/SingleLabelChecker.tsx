@@ -69,12 +69,13 @@ function ErrorBanner({ kind, message }: { kind: VerifyFailureKind; message: stri
 /** The story behind a loaded example, so the presenter knows what's coming. */
 function ExampleNote({ example, onDismiss }: { example: DemoCase; onDismiss: () => void }) {
   const badge = OUTCOME_BADGE[example.overall];
+  const BadgeIcon = badge.icon;
   return (
     <Alert>
       <AlertTitle className="flex flex-wrap items-center gap-x-2 gap-y-1 pr-8">
         {`Example loaded: ${example.application.application_id}`}
         <Badge variant="outline" className={`gap-1 ${badge.classes}`}>
-          <span aria-hidden="true">{badge.emoji}</span>
+          <BadgeIcon aria-hidden="true" />
           {`Expect: ${badge.text}`}
         </Badge>
       </AlertTitle>

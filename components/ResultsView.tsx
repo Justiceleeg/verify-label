@@ -16,7 +16,9 @@ interface ResultsViewProps {
 
 export function ResultsView({ result, files, onReset, onEdit }: ResultsViewProps) {
   return (
-    <div className="flex flex-col gap-6">
+    // Breaks out of the page's narrow form column: the comparison table wants
+    // more room than the form. Centered on the viewport, clamped to it.
+    <div className="relative left-1/2 flex w-[min(52rem,100vw-2rem)] -translate-x-1/2 flex-col gap-6">
       <ResultDetail result={result} files={files} />
 
       <div className="flex flex-wrap gap-3">

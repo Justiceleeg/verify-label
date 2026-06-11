@@ -4,6 +4,7 @@
 // orchestrator settles rows. Sortable by status (worst first, so agents
 // triage flagged rows) or back to CSV order. Settled rows open a detail view.
 
+import { ChevronDownIcon, ChevronsUpDownIcon, ChevronUpIcon } from "lucide-react";
 import { useState } from "react";
 import { Spinner } from "@/components/ui/spinner";
 import {
@@ -101,21 +102,30 @@ export function ResultsTable({
             <button
               type="button"
               onClick={cycleStatusSort}
-              className="text-sm font-semibold text-muted-foreground hover:text-foreground"
+              className="inline-flex items-center gap-1 text-sm font-semibold text-muted-foreground hover:text-foreground"
             >
-              Status{" "}
-              <span aria-hidden="true">
-                {sort === "worst_first" ? "▾" : sort === "best_first" ? "▴" : "↕"}
-              </span>
+              Status
+              {sort === "worst_first" ? (
+                <ChevronDownIcon className="size-3.5" aria-hidden="true" />
+              ) : sort === "best_first" ? (
+                <ChevronUpIcon className="size-3.5" aria-hidden="true" />
+              ) : (
+                <ChevronsUpDownIcon className="size-3.5" aria-hidden="true" />
+              )}
             </button>
           </TableHead>
           <TableHead className="px-0 pr-4">
             <button
               type="button"
               onClick={() => setSort("csv")}
-              className="text-sm font-semibold text-muted-foreground hover:text-foreground"
+              className="inline-flex items-center gap-1 text-sm font-semibold text-muted-foreground hover:text-foreground"
             >
-              Application <span aria-hidden="true">{sort === "csv" ? "▾" : "↕"}</span>
+              Application
+              {sort === "csv" ? (
+                <ChevronDownIcon className="size-3.5" aria-hidden="true" />
+              ) : (
+                <ChevronsUpDownIcon className="size-3.5" aria-hidden="true" />
+              )}
             </button>
           </TableHead>
           <TableHead className="px-0 pr-4 text-sm font-semibold text-muted-foreground">

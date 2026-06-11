@@ -167,13 +167,15 @@ export function ApplicationForm({
       {textInput("class_type", "Class/type", {
         placeholder: "e.g. Kentucky Straight Bourbon Whiskey",
       })}
-      {textInput("abv", "Alcohol content", {
-        placeholder: "e.g. 45",
-        suffix: "% alc/vol",
-        type: "number",
-        step: "0.1",
-      })}
-      {textInput("net_contents", "Net contents", { placeholder: "e.g. 750 mL" })}
+      <div className="grid gap-5 sm:grid-cols-2">
+        {textInput("abv", "Alcohol content", {
+          placeholder: "e.g. 45",
+          suffix: "% alc/vol",
+          type: "number",
+          step: "0.1",
+        })}
+        {textInput("net_contents", "Net contents", { placeholder: "e.g. 750 mL" })}
+      </div>
 
       <ImagePicker
         label="Front label image"

@@ -1,3 +1,4 @@
+import { ArrowLeftIcon } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { BatchChecker } from "@/components/batch/BatchChecker";
@@ -12,9 +13,10 @@ export default function BatchPage() {
       <p className="mb-6 text-sm">
         <Link
           href="/"
-          className="font-medium text-primary underline underline-offset-4 hover:text-primary/80"
+          className="inline-flex items-center gap-1.5 font-medium text-primary underline underline-offset-4 hover:text-primary/80"
         >
-          ← Check a single label
+          <ArrowLeftIcon className="size-4" aria-hidden="true" />
+          Check a single label
         </Link>
       </p>
       <h1 className="text-3xl font-bold tracking-tight">Check a batch</h1>

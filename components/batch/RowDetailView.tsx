@@ -4,6 +4,7 @@
 // (shared ResultDetail), with the row's images resolved lazily — zip entries
 // inflate only when the agent opens the row.
 
+import { ArrowLeftIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
@@ -44,9 +45,10 @@ export function RowDetailView({ row, images, onBack, onRetry }: RowDetailViewPro
         <button
           type="button"
           onClick={onBack}
-          className="text-sm font-medium text-primary underline underline-offset-4 hover:text-primary/80"
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-primary underline underline-offset-4 hover:text-primary/80"
         >
-          ← Back to all results
+          <ArrowLeftIcon className="size-4" aria-hidden="true" />
+          Back to all results
         </button>
         <h2 className="mt-3 text-2xl font-bold tracking-tight">
           {row.application.application_id} — {row.application.brand_name}

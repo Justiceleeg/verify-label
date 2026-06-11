@@ -96,6 +96,29 @@
   --sidebar-ring: oklch(0.55 0.07 255);
 }
 
+/* Brief attention pulse on flagged result rows when the agent clicks the
+   overall banner. --row-pulse-color is set per row to match its verdict. */
+@keyframes row-pulse {
+  0%,
+  100% {
+    box-shadow: inset 0 0 0 0 transparent;
+    background-color: transparent;
+  }
+  35%,
+  65% {
+    box-shadow: inset 3px 0 0 0 var(--row-pulse-color, var(--warning));
+    background-color: color-mix(
+      in oklab,
+      var(--row-pulse-color, var(--warning)) 8%,
+      transparent
+    );
+  }
+}
+
+.row-pulse {
+  animation: row-pulse 0.9s ease-in-out 2;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
