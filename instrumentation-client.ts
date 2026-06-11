@@ -3,5 +3,13 @@
 import { initBotId } from "botid/client/core";
 
 initBotId({
-  protect: [{ path: "/api/verify", method: "POST" }],
+  protect: [
+    {
+      path: "/api/verify",
+      method: "POST",
+      // Pinned on both sides (route.ts must match): "basic" is the free tier;
+      // an implicit deepAnalysis default fails closed when it isn't enabled.
+      advancedOptions: { checkLevel: "basic" },
+    },
+  ],
 });
