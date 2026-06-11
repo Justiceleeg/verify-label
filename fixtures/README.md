@@ -11,9 +11,10 @@ effects over the same exact-text rendering for perception stress tests.
 | Path | What |
 |---|---|
 | `cases.ts` | **Single source of truth.** Each case = application data + exactly what's printed on each label side + expected verdicts. Everything below is generated from it. |
-| `images/` | Rendered label PNGs (`app-0XX-front.png` / `-back.png`), committed. |
+| `../public/fixtures/images/` | Rendered label PNGs (`app-0XX-front.png` / `-back.png`), committed. Under `public/` so the deployed app serves them to the in-app demo loaders (`lib/demo.ts`). |
 | `applications.csv` | The sample batch CSV (`image_files` pairs rows to images by filename, semicolon-separated). |
 | `expected.json` | Expected per-field verdict + overall status per row, with a note explaining each case. |
+| `demo.json` | Compact manifest for the in-app demo buttons: application fields, image files, expected overall outcome, and the case note. |
 | `preflight/` | Deliberately invalid CSVs (missing image reference, missing column) for testing batch pre-flight validation. |
 | `extraction.ts` | Derives the *ideal extraction* for a case — what a perfect vision extractor would report for its images. |
 | `cases.test.ts` | Proves every case's declared expectations against `core/compare` (runs in `pnpm test`), so fixtures can't drift from the engine. |

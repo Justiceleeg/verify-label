@@ -1,0 +1,878 @@
+[
+  {
+    "application": {
+      "application_id": "APP-001",
+      "beverage_type": "spirits",
+      "brand_name": "Old Tom Distillery",
+      "class_type": "Kentucky Straight Bourbon Whiskey",
+      "abv": 45,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-001-front.png",
+      "app-001-back.png"
+    ],
+    "overall": "pass",
+    "note": "Clean pass — the PRD's success-criteria sample."
+  },
+  {
+    "application": {
+      "application_id": "APP-002",
+      "beverage_type": "spirits",
+      "brand_name": "Blue Heron",
+      "class_type": "Straight Rye Whiskey",
+      "abv": 45,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-002-front.png",
+      "app-002-back.png"
+    ],
+    "overall": "fail",
+    "note": "Seeded error: label states 40% ABV, application says 45%."
+  },
+  {
+    "application": {
+      "application_id": "APP-003",
+      "beverage_type": "spirits",
+      "brand_name": "Cedar Ridge",
+      "class_type": "Straight Bourbon Whiskey",
+      "abv": 43,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-003-front.png",
+      "app-003-back.png"
+    ],
+    "overall": "fail",
+    "note": "Seeded error: government warning printed in title case (\"Government Warning:\")."
+  },
+  {
+    "application": {
+      "application_id": "APP-004",
+      "beverage_type": "spirits",
+      "brand_name": "Juniper & Pine",
+      "class_type": "London Dry Gin",
+      "abv": 47,
+      "net_contents": "1 L"
+    },
+    "image_files": [
+      "app-004-front.png",
+      "app-004-back.png"
+    ],
+    "overall": "fail",
+    "note": "Seeded error: government warning missing from both sides."
+  },
+  {
+    "application": {
+      "application_id": "APP-005",
+      "beverage_type": "spirits",
+      "brand_name": "Silver Creek",
+      "class_type": "Vodka",
+      "abv": 40,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-005-front.png",
+      "app-005-back.png"
+    ],
+    "overall": "fail",
+    "note": "Seeded error: label brand \"Golden Gate\" does not match application \"Silver Creek\"."
+  },
+  {
+    "application": {
+      "application_id": "APP-006",
+      "beverage_type": "spirits",
+      "brand_name": "Whitetail",
+      "class_type": "Tennessee Whiskey",
+      "abv": 40,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-006-front.png",
+      "app-006-back.png"
+    ],
+    "overall": "fail",
+    "note": "Seeded error: label states 700 mL, application says 750 mL."
+  },
+  {
+    "application": {
+      "application_id": "APP-007",
+      "beverage_type": "spirits",
+      "brand_name": "Stone's Throw",
+      "class_type": "Straight Bourbon Whiskey",
+      "abv": 46,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-007-front.png",
+      "app-007-back.png"
+    ],
+    "overall": "needs_review",
+    "note": "Fuzzy match: label prints \"STONE'S THROW\" in caps — probable match, flagged, never silently passed."
+  },
+  {
+    "application": {
+      "application_id": "APP-008",
+      "beverage_type": "spirits",
+      "brand_name": "Copper Kettle",
+      "class_type": "Single Malt Whiskey",
+      "abv": 45,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-008-front.png",
+      "app-008-back.png"
+    ],
+    "overall": "fail",
+    "note": "Seeded error: label contradicts itself — 45% ABV printed with 94 proof (should be 90)."
+  },
+  {
+    "application": {
+      "application_id": "APP-009",
+      "beverage_type": "wine",
+      "brand_name": "Willow Bend",
+      "class_type": "Chardonnay",
+      "abv": 13,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-009-front.png",
+      "app-009-back.png"
+    ],
+    "overall": "pass",
+    "note": "Wine ABV range, valid: 12–14% is ≤3 points wide and contains the application's 13%."
+  },
+  {
+    "application": {
+      "application_id": "APP-010",
+      "beverage_type": "wine",
+      "brand_name": "Veranda",
+      "class_type": "Red Wine",
+      "abv": 15.5,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-010-front.png",
+      "app-010-back.png"
+    ],
+    "overall": "fail",
+    "note": "Seeded error: wine over 14% ABV states a 3-point range (14–17%); the maximum is 2 points."
+  },
+  {
+    "application": {
+      "application_id": "APP-011",
+      "beverage_type": "wine",
+      "brand_name": "Old Vine Cellars",
+      "class_type": "Red Table Wine",
+      "abv": 12,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-011-front.png",
+      "app-011-back.png"
+    ],
+    "overall": "pass",
+    "note": "Wine ≤14% designated table wine may omit alcohol content (§4.36) — no statement, still a pass."
+  },
+  {
+    "application": {
+      "application_id": "APP-012",
+      "beverage_type": "malt",
+      "brand_name": "Crooked Anchor",
+      "class_type": "India Pale Ale",
+      "abv": 6.5,
+      "net_contents": "12 fl oz"
+    },
+    "image_files": [
+      "app-012-front.png"
+    ],
+    "overall": "pass",
+    "note": "Malt pass on a single image: US-customary net contents, \"percent\" spelled out in the alcohol statement."
+  },
+  {
+    "application": {
+      "application_id": "APP-013",
+      "beverage_type": "malt",
+      "brand_name": "Iron Bell",
+      "class_type": "Lager",
+      "abv": 5,
+      "net_contents": "12 fl oz"
+    },
+    "image_files": [
+      "app-013-front.png",
+      "app-013-back.png"
+    ],
+    "overall": "fail",
+    "note": "Seeded error: malt beverage shows metric-only net contents (355 mL); US measure is required (§7.70). ABV omitted — allowed for this malt."
+  },
+  {
+    "application": {
+      "application_id": "APP-014",
+      "beverage_type": "malt",
+      "brand_name": "Tidal Wave",
+      "class_type": "Flavored Malt Beverage",
+      "abv": 5,
+      "net_contents": "16 fl oz"
+    },
+    "image_files": [
+      "app-014-front.png",
+      "app-014-back.png"
+    ],
+    "overall": "fail",
+    "note": "Seeded error: flavored malt beverage omits alcohol content, which is mandatory for it (§7.65)."
+  },
+  {
+    "application": {
+      "application_id": "APP-015",
+      "beverage_type": "spirits",
+      "brand_name": "North Fork",
+      "class_type": "Straight Bourbon Whiskey",
+      "abv": 50,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-015-front.png",
+      "app-015-back.png"
+    ],
+    "overall": "needs_review",
+    "note": "Field-of-vision flag (§5.63): alcohol content only on the back label, brand and class on the front."
+  },
+  {
+    "application": {
+      "application_id": "APP-016",
+      "beverage_type": "spirits",
+      "brand_name": "Black Maple",
+      "class_type": "Straight Bourbon Whiskey",
+      "abv": 50,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-016-front.png",
+      "app-016-back.png"
+    ],
+    "overall": "pass",
+    "note": "Dual-unit net contents — metric primary with a US-customary supplement is allowed for spirits."
+  },
+  {
+    "application": {
+      "application_id": "APP-017",
+      "beverage_type": "spirits",
+      "brand_name": "Foggy Bottom",
+      "class_type": "Blended Whiskey",
+      "abv": 40,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-017-front.png",
+      "app-017-back.png"
+    ],
+    "overall": "needs_review",
+    "note": "Perception case: the alcohol statement is printed but unreadably blurred → ❓, never a guess."
+  },
+  {
+    "application": {
+      "application_id": "APP-018",
+      "beverage_type": "spirits",
+      "brand_name": "Boone County",
+      "class_type": "Kentucky Straight Bourbon Whiskey",
+      "abv": 45,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-018-front.png",
+      "app-018-back.png"
+    ],
+    "overall": "needs_review",
+    "note": "OCR-noise-sized difference: label says \"Whisky\", application says \"Whiskey\" — flagged for review."
+  },
+  {
+    "application": {
+      "application_id": "APP-019",
+      "beverage_type": "spirits",
+      "brand_name": "Harbor Light",
+      "class_type": "White Rum",
+      "abv": 40,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-005-front.png",
+      "app-005-back.png"
+    ],
+    "overall": "fail",
+    "note": "Wrong image attached: the CSV row points at APP-005's images — brand and class mismatch while the numeric fields coincide."
+  },
+  {
+    "application": {
+      "application_id": "APP-020",
+      "beverage_type": "wine",
+      "brand_name": "Meadowlark",
+      "class_type": "Rosé Wine",
+      "abv": 10.5,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-020-front.png",
+      "app-020-back.png"
+    ],
+    "overall": "fail",
+    "note": "Seeded error: the application's 10.5% ABV falls outside the label's stated 11–13% range."
+  },
+  {
+    "application": {
+      "application_id": "APP-021",
+      "beverage_type": "spirits",
+      "brand_name": "Quarry Stone",
+      "class_type": "Straight Corn Whiskey",
+      "abv": 40,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-021-front.png",
+      "app-021-back.png"
+    ],
+    "overall": "needs_review",
+    "note": "Formatting flag: warning text verbatim but \"GOVERNMENT WARNING\" not printed in bold (§16.22)."
+  },
+  {
+    "application": {
+      "application_id": "APP-022",
+      "beverage_type": "spirits",
+      "brand_name": "Harrow & Sage",
+      "class_type": "Small Batch Gin",
+      "abv": 44,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-022-front.png",
+      "app-022-back.png"
+    ],
+    "overall": "pass",
+    "note": "Realism: curved bottle with glare streaks, everything legible — clean pass."
+  },
+  {
+    "application": {
+      "application_id": "APP-023",
+      "beverage_type": "wine",
+      "brand_name": "Sable Estate",
+      "class_type": "Pinot Noir",
+      "abv": 13.5,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-023-front.png",
+      "app-023-back.png"
+    ],
+    "overall": "pass",
+    "note": "Realism: tilted handheld shot with film grain and vignette — still a pass."
+  },
+  {
+    "application": {
+      "application_id": "APP-024",
+      "beverage_type": "spirits",
+      "brand_name": "Drift Line",
+      "class_type": "Spiced Rum",
+      "abv": 42,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-024-front.png",
+      "app-024-back.png"
+    ],
+    "overall": "needs_review",
+    "note": "Realism perception case: a camera-lens smudge covers the alcohol statement → ❓, never a guess (like APP-017)."
+  },
+  {
+    "application": {
+      "application_id": "APP-025",
+      "beverage_type": "wine",
+      "brand_name": "Quiet Hollow",
+      "class_type": "Cabernet Sauvignon",
+      "abv": 14,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-025-front.png",
+      "app-025-back.png"
+    ],
+    "overall": "pass",
+    "note": "Realism: dark low-contrast cellar shot — dim lighting, vignette, grain — but every field still legible. Pass."
+  },
+  {
+    "application": {
+      "application_id": "APP-026",
+      "beverage_type": "spirits",
+      "brand_name": "Ironwood",
+      "class_type": "Straight Rye Whiskey",
+      "abv": 46,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-026-front.png",
+      "app-026-back.png"
+    ],
+    "overall": "fail",
+    "note": "Realism + seeded error: heavy effects (curvature, glare, grain, vignette, dirt) over a label stating 700 mL against the application's 750 mL."
+  },
+  {
+    "application": {
+      "application_id": "APP-027",
+      "beverage_type": "spirits",
+      "brand_name": "Stonebridge",
+      "class_type": "Single Barrel Bourbon Whiskey",
+      "abv": 47,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-027-front.png",
+      "app-027-back.png"
+    ],
+    "overall": "pass",
+    "note": "Realism: shot from off to the side and slightly out of focus — everything still legible. Pass."
+  },
+  {
+    "application": {
+      "application_id": "APP-028",
+      "beverage_type": "wine",
+      "brand_name": "Bramble Gate",
+      "class_type": "Sauvignon Blanc",
+      "abv": 12.5,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-028-front.png",
+      "app-028-back.png"
+    ],
+    "overall": "needs_review",
+    "note": "Realism perception case: poorly cropped photo cuts the net-contents line off the bottom of the frame → ❓, never a guess."
+  },
+  {
+    "application": {
+      "application_id": "APP-029",
+      "beverage_type": "malt",
+      "brand_name": "Gristmill",
+      "class_type": "Amber Ale",
+      "abv": 5.6,
+      "net_contents": "12 fl oz"
+    },
+    "image_files": [
+      "app-029-front.png",
+      "app-029-back.png"
+    ],
+    "overall": "pass",
+    "note": "Realism: sun-faded label with washed-out low-contrast print — still legible end to end. Pass."
+  },
+  {
+    "application": {
+      "application_id": "APP-030",
+      "beverage_type": "spirits",
+      "brand_name": "Castle Peak",
+      "class_type": "American Single Malt Whiskey",
+      "abv": 43,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-030-front.png",
+      "app-030-back.png"
+    ],
+    "overall": "needs_review",
+    "note": "Realism perception case: a blown-out glare hotspot sits over the government warning → ❓, never a guess."
+  },
+  {
+    "application": {
+      "application_id": "APP-031",
+      "beverage_type": "spirits",
+      "brand_name": "Hollow Creek",
+      "class_type": "Kentucky Straight Bourbon Whiskey",
+      "abv": 45,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-031-front.png",
+      "app-031-back.png"
+    ],
+    "overall": "pass",
+    "note": "Extraneous-text decoys: ages, batch/barrel numbers, founding years, a street address containing 750, and an ounce serving suggestion — none of it a regulated field. Clean pass."
+  },
+  {
+    "application": {
+      "application_id": "APP-032",
+      "beverage_type": "spirits",
+      "brand_name": "Pale Harbor",
+      "class_type": "Dry Gin",
+      "abv": 44,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-032-front.png",
+      "app-032-back.png"
+    ],
+    "overall": "needs_review",
+    "note": "Failure case for ink contrast: tone-on-tone print — the big brand survives, the fine print doesn't → ❓ for everything else."
+  },
+  {
+    "application": {
+      "application_id": "APP-033",
+      "beverage_type": "spirits",
+      "brand_name": "Kestrel",
+      "class_type": "Straight Rye Whiskey",
+      "abv": 41,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-033-front.png",
+      "app-033-back.png"
+    ],
+    "overall": "needs_review",
+    "note": "Failure case for focus: the front photo is badly out of focus — only the large brand survives; the sharp back still reads."
+  },
+  {
+    "application": {
+      "application_id": "APP-034",
+      "beverage_type": "wine",
+      "brand_name": "Norwood Cellars",
+      "class_type": "Merlot",
+      "abv": 13.5,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-034-front.png",
+      "app-034-back.png"
+    ],
+    "overall": "needs_review",
+    "note": "Failure case for exposure: a badly underexposed cellar shot — nothing on either side can be read → ❓ across the board."
+  },
+  {
+    "application": {
+      "application_id": "APP-035",
+      "beverage_type": "spirits",
+      "brand_name": "Saddle Ridge",
+      "class_type": "Vodka",
+      "abv": 40,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-035-front.png",
+      "app-035-back.png"
+    ],
+    "overall": "fail",
+    "note": "Seeded error: spirits label omits the alcohol statement entirely (no alc/vol, no proof) — it is required for spirits (§5.65)."
+  },
+  {
+    "application": {
+      "application_id": "APP-036",
+      "beverage_type": "spirits",
+      "brand_name": "Twin Pines",
+      "class_type": "Straight Bourbon Whiskey",
+      "abv": 46,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-036-front.png",
+      "app-036-back.png"
+    ],
+    "overall": "fail",
+    "note": "Seeded error: the government warning is paraphrased and abridged — §16.21 requires the exact wording, no paraphrasing."
+  },
+  {
+    "application": {
+      "application_id": "APP-037",
+      "beverage_type": "spirits",
+      "brand_name": "Red Lantern",
+      "class_type": "White Rum",
+      "abv": 40,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-037-front.png",
+      "app-037-back.png"
+    ],
+    "overall": "fail",
+    "note": "Seeded error: spirits label states net contents only in US customary units (25.4 FL. OZ.); metric is required (§5.70) — the mirror of APP-013's malt error."
+  },
+  {
+    "application": {
+      "application_id": "APP-038",
+      "beverage_type": "spirits",
+      "brand_name": "Coyote Flats",
+      "class_type": "Tennessee Whiskey",
+      "abv": 41,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-038-front.png",
+      "app-038-back.png"
+    ],
+    "overall": "fail",
+    "note": "Seeded error: spirits label states alcohol content as a range (40–43%); only wine may state a range (§4.36)."
+  },
+  {
+    "application": {
+      "application_id": "APP-039",
+      "beverage_type": "spirits",
+      "brand_name": "Marble Arch",
+      "class_type": "London Dry Gin",
+      "abv": 47,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-039-front.png",
+      "app-039-back.png"
+    ],
+    "overall": "fail",
+    "note": "Seeded error: standalone class/type mismatch — label says \"Navy Strength Gin\", application says \"London Dry Gin\" (beyond OCR noise, unlike APP-018)."
+  },
+  {
+    "application": {
+      "application_id": "APP-040",
+      "beverage_type": "wine",
+      "brand_name": "Belle Saison",
+      "class_type": "Brut Sparkling Wine",
+      "abv": 12,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-040-front.png",
+      "app-040-back.png"
+    ],
+    "overall": "pass",
+    "note": "Correct varied: script-face sparkling wine with decoy cuvée/year small print. Pass."
+  },
+  {
+    "application": {
+      "application_id": "APP-041",
+      "beverage_type": "spirits",
+      "brand_name": "Copperline",
+      "class_type": "Apple Brandy",
+      "abv": 43,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-041-front.png"
+    ],
+    "overall": "pass",
+    "note": "Correct varied: single-image spirits label with everything — warning included — on the front (§5.63 satisfied on one side). Pass."
+  },
+  {
+    "application": {
+      "application_id": "APP-042",
+      "beverage_type": "malt",
+      "brand_name": "Half Hitch",
+      "class_type": "Hazy India Pale Ale",
+      "abv": 6.8,
+      "net_contents": "16 fl oz"
+    },
+    "image_files": [
+      "app-042-front.png"
+    ],
+    "overall": "pass",
+    "note": "Correct varied: single-image can using the abbreviated \"Alc. X% by Vol.\" form on a malt beverage. Pass."
+  },
+  {
+    "application": {
+      "application_id": "APP-043",
+      "beverage_type": "wine",
+      "brand_name": "Foxglove",
+      "class_type": "White Zinfandel",
+      "abv": 10.5,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-043-front.png",
+      "app-043-back.png"
+    ],
+    "overall": "pass",
+    "note": "Correct varied: wine with the alcohol range stated on the back label — wine has no field-of-vision rule, so the split is legal. Pass."
+  },
+  {
+    "application": {
+      "application_id": "APP-044",
+      "beverage_type": "spirits",
+      "brand_name": "Quarter Moon",
+      "class_type": "Blanco Tequila",
+      "abv": 40,
+      "net_contents": "1 L"
+    },
+    "image_files": [
+      "app-044-front.png",
+      "app-044-back.png"
+    ],
+    "overall": "pass",
+    "note": "Correct varied: liter bottle with dual-unit net contents and decoy year/batch small print. Pass."
+  },
+  {
+    "application": {
+      "application_id": "APP-045",
+      "beverage_type": "wine",
+      "brand_name": "Lark & Vine",
+      "class_type": "Chardonnay",
+      "abv": 13,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-045-front.png",
+      "app-045-back.png"
+    ],
+    "overall": "pass",
+    "note": "Correct varied: handheld photo (tilt, grain, vignette) of an ordinary chardonnay — everything legible. Pass."
+  },
+  {
+    "application": {
+      "application_id": "APP-046",
+      "beverage_type": "spirits",
+      "brand_name": "Gull Point",
+      "class_type": "Single Malt Whiskey",
+      "abv": 46,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-046-front.png",
+      "app-046-back.png"
+    ],
+    "overall": "pass",
+    "note": "Correct varied: curved bottle shot with glare and grain — a second cylindrical pass case in a different style. Pass."
+  },
+  {
+    "application": {
+      "application_id": "APP-047",
+      "beverage_type": "malt",
+      "brand_name": "North Pier",
+      "class_type": "Porter",
+      "abv": 5.8,
+      "net_contents": "12 fl oz"
+    },
+    "image_files": [
+      "app-047-front.png",
+      "app-047-back.png"
+    ],
+    "overall": "pass",
+    "note": "Correct varied: malt beverage legally omitting its optional alcohol content, on the colored craft style. Pass."
+  },
+  {
+    "application": {
+      "application_id": "APP-048",
+      "beverage_type": "wine",
+      "brand_name": "Millbrook",
+      "class_type": "Red Table Wine",
+      "abv": 11.5,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-048-front.png"
+    ],
+    "overall": "pass",
+    "note": "Correct varied: single-image table wine legally omitting alcohol content (§4.36), warning on the front. Pass."
+  },
+  {
+    "application": {
+      "application_id": "APP-049",
+      "beverage_type": "spirits",
+      "brand_name": "Verity",
+      "class_type": "Straight Wheat Whiskey",
+      "abv": 45,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-049-front.png",
+      "app-049-back.png"
+    ],
+    "overall": "pass",
+    "note": "Correct varied: spirits stating alc/vol without a proof line (proof is optional), with decoy age/year small print. Pass."
+  },
+  {
+    "application": {
+      "application_id": "APP-050",
+      "beverage_type": "spirits",
+      "brand_name": "Birchwood",
+      "class_type": "Straight Bourbon Whiskey",
+      "abv": 45,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-050-front.png",
+      "app-050-back.png"
+    ],
+    "overall": "fail",
+    "note": "Subtle seeded error: label states 44.5% (89 proof, internally consistent) against the application's 45% — a half-point delta on a curved, glared bottle. An extractor that rounds or autocorrects will miss it."
+  },
+  {
+    "application": {
+      "application_id": "APP-051",
+      "beverage_type": "spirits",
+      "brand_name": "Tidewater",
+      "class_type": "Spiced Rum",
+      "abv": 45.5,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-051-front.png",
+      "app-051-back.png"
+    ],
+    "overall": "fail",
+    "note": "Subtle seeded error: the alc/vol statement matches the application (45.5%) but the proof line reads 93 instead of 91 — a two-digit slip an extractor must transcribe faithfully to catch."
+  },
+  {
+    "application": {
+      "application_id": "APP-052",
+      "beverage_type": "wine",
+      "brand_name": "Harvest Gate",
+      "class_type": "Merlot",
+      "abv": 13,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-052-front.png",
+      "app-052-back.png"
+    ],
+    "overall": "fail",
+    "note": "Subtle seeded error: the warning drops a single word — \"drive a car or machinery\" instead of \"drive a car or operate machinery\". Verbatim means verbatim."
+  },
+  {
+    "application": {
+      "application_id": "APP-053",
+      "beverage_type": "malt",
+      "brand_name": "Stillwater Flats",
+      "class_type": "Lager",
+      "abv": 4.8,
+      "net_contents": "12 fl oz"
+    },
+    "image_files": [
+      "app-053-front.png",
+      "app-053-back.png"
+    ],
+    "overall": "fail",
+    "note": "Subtle seeded error: one substituted word in the warning — \"should not drink alcohol during pregnancy\" instead of \"alcoholic beverages\". An extractor that paraphrases from memory will read right past it."
+  },
+  {
+    "application": {
+      "application_id": "APP-054",
+      "beverage_type": "spirits",
+      "brand_name": "Pocket Watch",
+      "class_type": "Peach Brandy",
+      "abv": 35,
+      "net_contents": "375 mL"
+    },
+    "image_files": [
+      "app-054-front.png",
+      "app-054-back.png"
+    ],
+    "overall": "fail",
+    "note": "Subtle seeded error: half-bottle stating 350 mL against the application's 375 mL — a one-digit difference in small print."
+  },
+  {
+    "application": {
+      "application_id": "APP-055",
+      "beverage_type": "spirits",
+      "brand_name": "Sawmill Bend",
+      "class_type": "Straight Bourbon Whiskey",
+      "abv": 44,
+      "net_contents": "750 mL"
+    },
+    "image_files": [
+      "app-055-front.png",
+      "app-055-back.png"
+    ],
+    "overall": "fail",
+    "note": "Subtle seeded error: the metric statement matches the application (750 mL) but its US-customary supplement reads 12 FL. OZ. instead of 25.4 — the label contradicts itself."
+  }
+]

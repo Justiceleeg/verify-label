@@ -4,7 +4,9 @@ import { describe, expect, it } from "vitest";
 import { preflight } from "./preflight";
 
 const FIXTURES = path.resolve(__dirname, "../../fixtures");
-const fixtureImages = readdirSync(path.join(FIXTURES, "images"));
+const fixtureImages = readdirSync(
+  path.resolve(__dirname, "../../public/fixtures/images"),
+);
 const read = (...parts: string[]) =>
   readFileSync(path.join(FIXTURES, ...parts), "utf8");
 

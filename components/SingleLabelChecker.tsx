@@ -5,12 +5,23 @@
 // into lib/verifyLabel. Form values and files survive every transition, so
 // errors and "edit and re-check" never lose the agent's input.
 
+import { ShuffleIcon, XIcon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import {
+  Alert,
+  AlertAction,
+  AlertDescription,
+  AlertTitle,
+} from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
 import { parseApplication } from "@/core/application";
 import type { VerificationResult } from "@/core/types";
+import { fetchDemoImages, randomSingleExample, type DemoCase } from "@/lib/demo";
 import { verifyLabelFiles, type VerifyFailureKind } from "@/lib/verifyLabel";
 import { ApplicationForm, EMPTY_FORM, type FormValues } from "./ApplicationForm";
+import { OUTCOME_BADGE } from "./batch/OverallBadge";
 import { ResultsView } from "./ResultsView";
 
 type Phase =
@@ -55,6 +66,31 @@ function ErrorBanner({ kind, message }: { kind: VerifyFailureKind; message: stri
   );
 }
 
+/** The story behind a loaded example, so the presenter knows what's coming. */
+function ExampleNote({ example, onDismiss }: { example: DemoCase; onDismiss: () => void }) {
+  const badge = OUTCOME_BADGE[example.overall];
+  return (
+    <Alert>
+      <AlertTitle className="flex flex-wrap items-center gap-x-2 gap-y-1 pr-8">
+        {`Example loaded: ${example.application.application_id}`}
+        <Badge variant="outline" className={`gap-1 ${badge.classes}`}>
+          <span aria-hidden="true">{badge.emoji}</span>
+          {`Expect: ${badge.text}`}
+        </Badge>
+      </AlertTitle>
+      <AlertDescription>
+        {`${example.note} Everything below is editable — tweak a field to see the verdict change.`}
+      </AlertDescription>
+      <AlertAction>
+        <Button type="button" variant="ghost" size="icon-xs" onClick={onDismiss}>
+          <XIcon aria-hidden="true" />
+          <span className="sr-only">Dismiss</span>
+        </Button>
+      </AlertAction>
+    </Alert>
+  );
+}
+
 export function SingleLabelChecker() {
   const [values, setValues] = useState<FormValues>(EMPTY_FORM);
   const [files, setFiles] = useState<{ front: File | null; back: File | null }>({
@@ -63,6 +99,40 @@ export function SingleLabelChecker() {
   });
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [phase, setPhase] = useState<Phase>({ name: "form" });
+  const [example, setExample] = useState<DemoCase | null>(null);
+  const [exampleBusy, setExampleBusy] = useState(false);
+  const [exampleError, setExampleError] = useState<string | null>(null);
+
+  async function loadExample() {
+    setExampleBusy(true);
+    setExampleError(null);
+    try {
+      // Different from the currently loaded one, so the button always shows
+      // something new.
+      const demo = randomSingleExample(example?.application.application_id);
+      const [front, back] = await fetchDemoImages(demo.image_files);
+      setValues({
+        application_id: demo.application.application_id,
+        beverage_type: demo.application.beverage_type,
+        brand_name: demo.application.brand_name,
+        class_type: demo.application.class_type,
+        abv: String(demo.application.abv),
+        net_contents: demo.application.net_contents,
+      });
+      setFiles({ front, back: back ?? null });
+      setFieldErrors({});
+      setExample(demo);
+      setPhase({ name: "form" });
+    } catch (err) {
+      setExampleError(
+        err instanceof Error
+          ? err.message
+          : "Couldn't load the example. Try again.",
+      );
+    } finally {
+      setExampleBusy(false);
+    }
+  }
 
   async function handleSubmit() {
     const parsed = parseApplication(values);
@@ -110,6 +180,8 @@ export function SingleLabelChecker() {
           setValues(EMPTY_FORM);
           setFiles({ front: null, back: null });
           setFieldErrors({});
+          setExample(null);
+          setExampleError(null);
           setPhase({ name: "form" });
         }}
         onEdit={() => setPhase({ name: "form" })}
@@ -120,6 +192,33 @@ export function SingleLabelChecker() {
   const checking = phase.name === "checking";
   return (
     <div className="flex flex-col gap-5">
+      <div className="flex flex-wrap items-center justify-between gap-3 rounded-md border border-dashed bg-muted/40 px-3 py-2.5">
+        <p className="text-sm text-muted-foreground">
+          No label handy? Load a sample application and its label photos.
+        </p>
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={loadExample}
+          disabled={exampleBusy || checking}
+        >
+          {exampleBusy ? (
+            <Spinner className="size-4" aria-hidden="true" />
+          ) : (
+            <ShuffleIcon aria-hidden="true" />
+          )}
+          {exampleBusy
+            ? "Loading example…"
+            : example
+              ? "Try another example"
+              : "Try an example"}
+        </Button>
+      </div>
+      {exampleError && <p className="text-sm text-destructive">{exampleError}</p>}
+      {example && (
+        <ExampleNote example={example} onDismiss={() => setExample(null)} />
+      )}
       {phase.name === "form" && phase.error && (
         <ErrorBanner kind={phase.error.kind} message={phase.error.message} />
       )}

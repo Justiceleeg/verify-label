@@ -45,7 +45,9 @@ core/
   rules/          beverage-type rules, government warning constant
 app/              Next.js App Router pages + api/verify route
 components/       upload, batch progress, results table, detail view
-fixtures/         sample CSV, test label images, expected verdicts
+fixtures/         sample CSV, expected verdicts, demo manifest
+public/fixtures/  rendered test label images (served, so the in-app demo
+                  loaders can fetch them)
 ```
 
 `core/` is the substantive codebase: pure TypeScript, zero Next.js imports,

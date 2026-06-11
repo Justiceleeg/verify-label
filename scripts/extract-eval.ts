@@ -36,7 +36,7 @@ import { FIXTURE_CASES, imageFiles, type FixtureCase } from "../fixtures/cases";
 import { idealExtraction } from "../fixtures/extraction";
 
 const ROOT = path.resolve(__dirname, "..");
-const IMAGES_DIR = path.join(ROOT, "fixtures", "images");
+const IMAGES_DIR = path.join(ROOT, "public", "fixtures", "images");
 
 /** Minimal .env.local loader — tsx doesn't load it the way Next.js does. */
 async function loadEnvLocal(): Promise<void> {

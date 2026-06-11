@@ -1,12 +1,19 @@
-// Regenerates everything under fixtures/ that ships in the repo:
-//   images/*.png        rendered label images (Playwright screenshot)
+// Regenerates the fixture artifacts that ship in the repo:
+//   ../public/fixtures/images/*.png  rendered label images (Playwright
+//                       screenshot; under public/ so the app can serve them
+//                       to the demo loaders)
 //   applications.csv    the sample batch CSV
 //   expected.json       expected verdicts per row (via core/compare on the
 //                       ideal extraction — cases.test.ts proves these equal
 //                       the declared expectations)
+//   demo.json           compact manifest for the in-app demo loaders
+//                       (lib/demo.ts): application fields + images + the
+//                       expected outcome and case note
 //   preflight/*.csv     deliberately invalid CSVs for pre-flight validation
 //
 // Run with: pnpm fixtures:generate
+// Pass --data-only to rewrite the CSV/JSON artifacts without re-rendering
+// the label images (no browser needed).
 
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
@@ -22,6 +29,9 @@ import {
 } from "./html";
 
 const FIXTURES_DIR = path.resolve(fileURLToPath(new URL(".", import.meta.url)), "..");
+// Images live under public/ so the deployed app can serve them to the demo
+// loaders (lib/demo.ts); everything else stays in fixtures/.
+const IMAGES_DIR = path.resolve(FIXTURES_DIR, "../public/fixtures/images");
 
 const CSV_HEADER =
   "application_id,beverage_type,brand_name,class_type,abv,net_contents,image_files";
@@ -36,8 +46,7 @@ function csvRow(values: Array<string | number>): string {
 }
 
 async function renderImages(): Promise<number> {
-  const imagesDir = path.join(FIXTURES_DIR, "images");
-  await mkdir(imagesDir, { recursive: true });
+  await mkdir(IMAGES_DIR, { recursive: true });
 
   // Uses the system Chrome; saves the Playwright-managed Chromium download.
   const browser = await chromium.launch({ channel: "chrome" });
@@ -71,7 +80,7 @@ async function renderImages(): Promise<number> {
       }
       await page
         .locator(".shot")
-        .screenshot({ path: path.join(imagesDir, files[i]) });
+        .screenshot({ path: path.join(IMAGES_DIR, files[i]) });
       count++;
     }
   }
@@ -95,6 +104,24 @@ async function writeCsv(): Promise<void> {
   await writeFile(
     path.join(FIXTURES_DIR, "applications.csv"),
     [CSV_HEADER, ...rows].join("\n") + "\n",
+  );
+}
+
+/**
+ * Compact manifest for the in-app demo loaders (lib/demo.ts): everything the
+ * UI needs to fill the single-label form or build a sample batch CSV, plus
+ * the expected outcome and the case note so the demo can say what's coming.
+ */
+async function writeDemo(): Promise<void> {
+  const rows = FIXTURE_CASES.map((c) => ({
+    application: c.application,
+    image_files: imageFiles(c),
+    overall: compare(c.application, idealExtraction(c)).overall,
+    note: c.note,
+  }));
+  await writeFile(
+    path.join(FIXTURES_DIR, "demo.json"),
+    JSON.stringify(rows, null, 2) + "\n",
   );
 }
 
@@ -155,12 +182,15 @@ async function writePreflight(): Promise<void> {
 }
 
 async function main(): Promise<void> {
-  const imageCount = await renderImages();
+  const dataOnly = process.argv.includes("--data-only");
+  const imageCount = dataOnly ? 0 : await renderImages();
   await writeCsv();
   await writeExpected();
+  await writeDemo();
   await writePreflight();
   console.log(
-    `Generated ${imageCount} label images, applications.csv (${FIXTURE_CASES.length} rows), expected.json, preflight CSVs.`,
+    `Generated ${dataOnly ? "no label images (--data-only)" : `${imageCount} label images`}, ` +
+      `applications.csv (${FIXTURE_CASES.length} rows), expected.json, demo.json, preflight CSVs.`,
   );
 }
 
